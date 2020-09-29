@@ -1,0 +1,2 @@
+spring:  profiles:    active:    - local
+  datasource:    url: jdbc:mysql://localhost:330/mydb?serverTimezone=UTC    username: root    password: root    driver-class-name: com.mysql.cj.jdbc.Driver  session:    jdbc:      initialize-schema: alwaysserver:  port: 8080  tomcat:    file-encoding: UTF-8  mybatis:  type-aliases-package: com.SpringStarter.example.domain  mapper-locations: mapper/**/*.xml      
