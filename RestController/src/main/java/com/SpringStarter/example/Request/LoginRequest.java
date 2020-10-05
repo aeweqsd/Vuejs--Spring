@@ -1,5 +1,8 @@
 package com.SpringStarter.example.Request;
 
+import lombok.ToString;
+
+@ToString
 public class LoginRequest {
 	private String username;
 	private String password;

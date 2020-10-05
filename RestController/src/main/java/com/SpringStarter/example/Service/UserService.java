@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.SpringStarter.example.Domain.User;
 
-@Service
 public interface UserService extends UserDetailsService{
 	
 	public User readUser(String username);
