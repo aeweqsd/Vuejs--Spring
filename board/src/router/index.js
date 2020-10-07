@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import BoardList from '../views/BoardList.vue'
 import Signup from '../views/SignUp.vue'
+import boardDetail from '../views/boardDetail.vue'
+import boardSubject from '../views/boardSubject.vue'
 
 Vue.use(VueRouter)
 
@@ -37,6 +39,16 @@ const routes = [
     path:'/signup',
     name:'SignUp',
     component : Signup
+  },
+  {
+    path: '/boardDetail/:bId',
+    name: 'boardDetail',
+    component: boardDetail
+  },
+  {
+    path: '/boardSubject',
+    name: 'boardSubject',
+    component : boardSubject
   }
 ]
 

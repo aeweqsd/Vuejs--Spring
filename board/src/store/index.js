@@ -11,7 +11,8 @@ export default new Vuex.Store({
     login_err:false,
     login_success:false,
     boardList:[],
-    board_detail:[]
+    board_detail:[],
+    boardSubject:[]
   },
   getters:{
     allUsers: state=>{
@@ -30,6 +31,22 @@ export default new Vuex.Store({
       state.Userinfo.User_Name =data.name
       state.Userinfo.User_auth=data.authorities
       Route.push("/user")
+  },
+  SET_BOARDLIST(state,data){
+    state.boardlist = data
+  },
+  SET_BOARDDETAIL(state,data){
+    state.board_detail=data
+    Route.push("/boardDetail/" + data.idboard)
+  },
+  SET_BOARDDELETE(state,data){
+    var index = state.boardList.findIndex(i => i.idboard == data);
+    state.boardList.splice(index,1);
+    Route.push("/boardlist")
+  },
+  SET_BOARDSUBJECT(state,data){
+    state.boardSubject=data
+
   }
 },
   actions: {
@@ -40,8 +57,8 @@ export default new Vuex.Store({
         .then(Response =>{
           console.log(Response.data)
           if(Response.data.username != null){
-            axios.defaults.headers.common['Authorization'] = 'Bearer ${Response.data.token}'
-            commit('SET_USER',Response.data)
+            axios.defaults.headers.common['Authorization'] = `Bearer ${Response.data.token}`
+            commit('SET_USER',Response.data) 
           }
         })
         .catch(Error=>{
@@ -68,6 +85,53 @@ export default new Vuex.Store({
           reject(Error)
         })
       })
+    },
+    boardList({commit}){
+      return new Promise((resolve,reject) =>{
+        axios.get('http://localhost:9000/api/test/user')
+        .then(Response=>{
+          console.log(Response.data)
+          commit('SET_BOARDLIST',Response.data)
+        })
+        .catch(Error=>{
+          console.log('error')
+          reject(Error)
+        })
+      })
+
+    },
+    boardDetail({commit},payload){
+      console.log(payload)
+      return new Promise((resolve,reject) =>{
+        axios.get('http://localhost:9000/api/test/boardDetail',{
+          params:{
+            idboard : payload
+          }
+        })
+        .then(Response=>{
+          console.log(Response.data)
+          commit('SET_BOARDDETAIL',Response.data)
+        })
+        .catch(Error=>{
+          console.log('error')
+          reject(Error)
+        })
+      })
+    },
+    boardSubject({commit},payload){
+      return new Promise((resolve,reject) =>{
+       axios.get('http://localhost:9000/api/test/boardSubject',{
+       })
+       .then(Response=>{
+         console.log(Response.data)
+         commit('SET_BOARDSUBJECT',Response.data)
+       })
+       .catch(Error=>{
+         console.log('Error')
+         reject(Error)
+       })
+      })
+
     },
     NewUsers:({commit},payload) =>{
       commit('NewUsers',payload)

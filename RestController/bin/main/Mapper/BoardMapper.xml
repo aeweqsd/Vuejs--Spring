@@ -7,7 +7,7 @@ select idboard,boardname,boardsubject,boardcontent,boardwriter,hit
 from board;
 </select>
 <select id="selectBoardDetail" resultType="Board">
-select *
+select idboard,boardname,boardsubject,boardcontent,boardwriter,hit
 from board
 where idboard = #{idboard}
 </select>

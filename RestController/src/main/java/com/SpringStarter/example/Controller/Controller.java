@@ -11,18 +11,20 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.SpringStarter.example.Domain.Board;
+import com.SpringStarter.example.Domain.Subject;
 import com.SpringStarter.example.Service.BoardService;
+import com.SpringStarter.example.Service.SubjectService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-@CrossOrigin(origins="*",maxAge =3600)
+@CrossOrigin(origins="*", maxAge =3600)
 @RestController
 @RequestMapping("/api/test")
 public class Controller {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 		 @Autowired private BoardService boardservice;
-	 
+		 @Autowired private SubjectService subjectservice;
 	
 	@GetMapping("/all")
 	public String allAccess() {
@@ -43,7 +45,7 @@ public class Controller {
 		return "Admin Content";
 	}
 	
-	@GetMapping("/boarddetail")
+	@GetMapping("/boardDetail")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<?> boarddetail(@RequestParam int idboard){
 		logger.info("///"+ idboard);
@@ -53,11 +55,17 @@ public class Controller {
 	
 	@DeleteMapping("/boardDelete/{idboard}")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<?> boarddelete(@PathVariable(value ="bId") int idboard){
+	public ResponseEntity<?> boarddelete(@PathVariable(value ="idboard") int idboard){
 		logger.info("delete" + idboard);
 		boardservice.deleteBoard(idboard);
 		return ResponseEntity.ok(idboard);
 	}
 	
+	@GetMapping("/boardSubject")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<?> boardsubject(){
+		List<Subject> subjectlist = subjectservice.selectSubjectList();
+		return ResponseEntity.ok(subjectlist);
+	}
 	
 }
