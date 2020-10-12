@@ -9,7 +9,12 @@
                 <td style="text-align:right">{{board_detail.Datetime}}</td>
             </tr>
             <tr>
-                <td colspan="2" style="border:none;text-align:right;border-top:3px double #ededed">
+                <td colspan="2" style="border:none;text-align:center;border-top:3px double #ededed">
+                    {{board_detail.boardcontent}}
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:right">
                     <v-btn @click="BoardDelete({boardid:boardid})">삭제</v-btn>
                 </td>
             </tr>

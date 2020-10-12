@@ -6,6 +6,7 @@ import BoardList from '../views/BoardList.vue'
 import Signup from '../views/SignUp.vue'
 import boardDetail from '../views/boardDetail.vue'
 import boardSubject from '../views/boardSubject.vue'
+import logout from "../views/Logout.vue"
 
 Vue.use(VueRouter)
 
@@ -49,6 +50,16 @@ const routes = [
     path: '/boardSubject',
     name: 'boardSubject',
     component : boardSubject
+  },
+  {
+    path:'/Menu',
+    name:'menu',
+    component: menubar
+  },
+  {
+    path:'/Logout',
+    name:'logout',
+    component: logout
   }
 ]
 

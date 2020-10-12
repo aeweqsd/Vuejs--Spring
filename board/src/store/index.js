@@ -2,7 +2,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Route from '../router/index'
 import axios from 'axios'
+import router from '../router/index'
+import cookie from 'vue-cookies'
 Vue.use(Vuex)
+
 const resourceHost ="http://localhost:8080"
 
 export default new Vuex.Store({
@@ -12,7 +15,13 @@ export default new Vuex.Store({
     login_success:false,
     boardList:[],
     board_detail:[],
-    boardSubject:[]
+    boardSubject:[],
+    menu:[
+      { icon: 'mdi-login',
+        text:'로그인',
+        link:'/login'
+      }
+    ]
   },
   getters:{
     allUsers: state=>{
@@ -46,7 +55,9 @@ export default new Vuex.Store({
   },
   SET_BOARDSUBJECT(state,data){
     state.boardSubject=data
-
+  },
+  SET_MENU(state,data){
+    state.menu = data
   }
 },
   actions: {
@@ -56,8 +67,20 @@ export default new Vuex.Store({
         axios.post('http://localhost:9000/api/auth/signin',payload)
         .then(Response =>{
           console.log(Response.data)
+          cookie.set("User",Response.data)
           if(Response.data.username != null){
             axios.defaults.headers.common['Authorization'] = `Bearer ${Response.data.token}`
+            commit('SET_MENU', [{
+              icon:'mdi-logout',
+              text:'로그아웃',
+              link:'/Logout'
+            },
+            {
+              icon:'mdi-message-text',
+              text:'게시판',
+              link:'/boardlist'
+      
+            }])
             commit('SET_USER',Response.data) 
           }
         })
@@ -65,10 +88,43 @@ export default new Vuex.Store({
           console.log('error')
           reject(Error)
         })
-        
 
       })
 
+    },
+    islogin({commit},payload){
+      if(cookie.isKey("User")){
+        var info = cookie.get("User")
+        axios.defaults.headers.common['Authorization'] = `Bearer ${info.token}`
+        commit('SET_MENU', [{
+          icon:'mdi-logout',
+          text:'로그아웃',
+          link:'/Logout'
+        },
+        {
+          icon:'mdi-message-text',
+          text:'게시판',
+          link:'/boardlist'
+  
+        }])
+        commit('SET_USER',info) 
+        
+      console.log(info)
+      }
+
+    },
+    logoutProcess({commit},payload){
+      console.log(sessionStorage);
+      sessionStorage.clear();
+      cookie.remove("User");
+      axios.defaults.headers.common['Authorization'] ='';
+      commit('SET_MENU', [{
+        icon: 'mdi-login',
+        text:'로그인',
+        link:'/login'
+      }]
+     )
+      router.push("/")
     },
     SignUp({commit},payload){
       console.log(payload)
@@ -135,6 +191,19 @@ export default new Vuex.Store({
     },
     NewUsers:({commit},payload) =>{
       commit('NewUsers',payload)
+    },
+    BoardDelete({commit},payload){
+      return new Promise((reslove,reject) =>{
+          axios.delete('http://localhost:900/api/test/boarddelete/'+payload.boardid)
+          .then(Response =>{
+            console.log(Response.data)
+            commit('SET_BOARDDELETE',Response.data)
+          })
+          .catch(Error =>{
+            console.log('error')
+            reject(Error)
+          })
+      })
     }
   }
 })
