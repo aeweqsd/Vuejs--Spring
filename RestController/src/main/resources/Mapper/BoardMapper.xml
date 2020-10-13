@@ -3,18 +3,24 @@
 <mapper namespace="com.SpringStarter.example.Mapper.BoardMapper">
 
 <select id="selectBoardList" resultType="Board">
-select idboard,boardname,boardsubject,boardcontent,boardwriter,hit
-from board;
+select idboard,boardname,boardsubject,boardcontent,boardwriter,hit,datetime, timediff(now(),datetime) as timediff
+from board
+order by datetime desc;
 </select>
 <select id="selectBoardDetail" resultType="Board">
-select idboard,boardname,boardsubject,boardcontent,boardwriter,hit
+select idboard,boardname,boardsubject,boardcontent,boardwriter,hit,datetime
 from board
 where idboard = #{idboard}
 </select>
 <delete id="deleteBoard">
-delete from board;
+delete from board
 where idboard =#{idboard};
 </delete>
-
-
+<select id="subjectboardlist" parameterType="String" resultType="Board">
+select idboard,boardname,boardsubject,boardcontent, boardwriter, hit, datetime
+from board
+where boardsubject = #{subject}
+order by datetime desc;
+</select>
+ 
 </mapper>

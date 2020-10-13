@@ -15,5 +15,6 @@ public interface BoardService {
 	
 	public void deleteBoard(int idboard);
 	
+	public List<Board> subjectboardlist(String subject);
 
 }

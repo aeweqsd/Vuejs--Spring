@@ -16,7 +16,7 @@ public interface BoardMapper {
 	
 	public void deleteBoard(int idboard);
 	
-	
+	public List<Board> subjectboardlist(String subject);
 	
 	
 }

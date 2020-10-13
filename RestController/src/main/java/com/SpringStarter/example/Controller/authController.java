@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +18,10 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +33,8 @@ import com.SpringStarter.example.Request.JoinRequest;
 import com.SpringStarter.example.Request.LoginRequest;
 import com.SpringStarter.example.Response.JwtResponse;
 import com.SpringStarter.example.Service.UserService;
+
+import io.jsonwebtoken.Jwts;
 
 @CrossOrigin(origins="*", maxAge=3600)
 @RestController
@@ -57,6 +63,16 @@ public class authController {
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 		return ResponseEntity.ok(new JwtResponse(jwt, user.getUsername(),user.getName(),roles));
+	}
+	@GetMapping("/logout")
+	public ResponseEntity<?> disableUser(HttpServletRequest req){
+		String headerauth = req.getHeader("Authorization");
+		if(StringUtils.hasText(headerauth) && headerauth.startsWith("Bearer")) {
+			headerauth.substring(7, headerauth.length());
+		}
+		return ResponseEntity.ok(11);
+		
+		
 	}
 	@PostMapping("/signup")
 	public ResponseEntity<?> signupUser(@Validated @RequestBody JoinRequest joinrequest){

@@ -10,7 +10,20 @@ public class Board {
 	private String boardwriter;
 	private int hit;
 	private int likenum;
-	private int datetime;
+	private String datetime;
+	private String timediff;
+	public String getTimediff() {
+		return timediff;
+	}
+	public void setTimediff(String timediff) {
+		this.timediff = timediff;
+	}
+	public String getDatetime() {
+		return datetime;
+	}
+	public void setDatetime(String datetime) {
+		this.datetime = datetime;
+	}
 	@Override
 	public String toString() {
 		return "Board [idboard=" + idboard + ", boardname=" + boardname + ", boardsubject=" + boardsubject
@@ -59,11 +72,6 @@ public class Board {
 	public void setLikenum(int likenum) {
 		this.likenum = likenum;
 	}
-	public int getDatetime() {
-		return datetime;
-	}
-	public void setDatetime(int datetime) {
-		this.datetime = datetime;
-	}
+	
 
 }

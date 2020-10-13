@@ -45,7 +45,7 @@ public class Controller {
 		return "Admin Content";
 	}
 	
-	@GetMapping("/boardDetail")
+	@GetMapping("/board")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<?> boarddetail(@RequestParam int idboard){
 		logger.info("///"+ idboard);
@@ -53,7 +53,7 @@ public class Controller {
 		return ResponseEntity.ok(board);		
 	}
 	
-	@DeleteMapping("/boardDelete/{idboard}")
+	@DeleteMapping("/board/{idboard}")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<?> boarddelete(@PathVariable(value ="idboard") int idboard){
 		logger.info("delete" + idboard);
@@ -66,6 +66,12 @@ public class Controller {
 	public ResponseEntity<?> boardsubject(){
 		List<Subject> subjectlist = subjectservice.selectSubjectList();
 		return ResponseEntity.ok(subjectlist);
+	}
+	@PostMapping("/subjectselect")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<?> subjectselect(@RequestBody String name){
+		List<Board> board= boardservice.subjectboardlist(name);
+		return ResponseEntity.ok("aaa");
 	}
 	
 }

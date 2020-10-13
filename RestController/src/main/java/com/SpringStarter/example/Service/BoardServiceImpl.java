@@ -29,4 +29,10 @@ public class BoardServiceImpl implements BoardService{
 		boardmapper.deleteBoard(idboard);	
 	}
 
+	@Override
+	public List<Board> subjectboardlist(String subject) {
+	
+		return boardmapper.subjectboardlist(subject);
+	}
+
 }

@@ -46,10 +46,12 @@ export default new Vuex.Store({
   },
   SET_BOARDDETAIL(state,data){
     state.board_detail=data
-    Route.push("/boardDetail/" + data.idboard)
+    Route.push("/boardDetail/"+data.idboard)
   },
   SET_BOARDDELETE(state,data){
+    console.log(data)
     var index = state.boardList.findIndex(i => i.idboard == data);
+    console.log(index);
     state.boardList.splice(index,1);
     Route.push("/boardlist")
   },
@@ -159,7 +161,7 @@ export default new Vuex.Store({
     boardDetail({commit},payload){
       console.log(payload)
       return new Promise((resolve,reject) =>{
-        axios.get('http://localhost:9000/api/test/boardDetail',{
+        axios.get('http://localhost:9000/api/test/board',{
           params:{
             idboard : payload
           }
@@ -193,8 +195,9 @@ export default new Vuex.Store({
       commit('NewUsers',payload)
     },
     BoardDelete({commit},payload){
-      return new Promise((reslove,reject) =>{
-          axios.delete('http://localhost:900/api/test/boarddelete/'+payload.boardid)
+      console.log(payload)
+      return new Promise((resolve,reject) =>{
+          axios.delete('http://localhost:9000/api/test/board/'+payload.idboard)
           .then(Response =>{
             console.log(Response.data)
             commit('SET_BOARDDELETE',Response.data)
@@ -204,6 +207,18 @@ export default new Vuex.Store({
             reject(Error)
           })
       })
-    }
+    },
+    Subjectselect({commit},payload){
+      console.log(payload)
+      return new Promise((resolve,reject) =>{
+        axios.post('http://localhost:9000/api/test/subjectselect',{
+          name:payload.boardSubject
+        })
+        .then(Response =>{
+          console.log(Response.data)
+        
+        })
+      })
+    }  
   }
 })

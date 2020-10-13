@@ -6,7 +6,7 @@
                     <template v-for="(items) in boardSubject">
                         <v-list-item
                         :key ="items.subjectname"
-                        @click="boardselect(items.subjectname)"
+                        @click="Subjectselect(items.subjectname)"
                         >
                     <v-list-item-content>
                         <v-list-item-subtitle v-html="items.subjectname"></v-list-item-subtitle>
@@ -19,7 +19,7 @@
     </v-container>
 </template>
 <script>
-import {mapState,mapAction} from "vuex"
+import {mapState,mapActions} from "vuex"
 export default {
 
     created(){
@@ -27,6 +27,9 @@ export default {
     },
     computed:{
         ...mapState(["boardSubject"])
+    },
+    method:{
+        ...mapActions(["Subjectselect"])
     }
 }
 </script>

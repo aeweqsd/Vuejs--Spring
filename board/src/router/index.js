@@ -42,7 +42,7 @@ const routes = [
     component : Signup
   },
   {
-    path: '/boardDetail/:bId',
+    path: '/boardDetail/:idboard',
     name: 'boardDetail',
     component: boardDetail
   },

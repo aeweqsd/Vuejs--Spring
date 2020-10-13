@@ -6,7 +6,7 @@
             </tr>
             <tr style="font-size:0.9rem;">
                 <td> 작성자 ㅣ {{board_detail.boardwriter}}</td>
-                <td style="text-align:right">{{board_detail.Datetime}}</td>
+                <td style="text-align:right">{{board_detail.datetime}}</td>
             </tr>
             <tr>
                 <td colspan="2" style="border:none;text-align:center;border-top:3px double #ededed">
@@ -15,7 +15,7 @@
             </tr>
             <tr>
                 <td style="text-align:right">
-                    <v-btn @click="BoardDelete({boardid:boardid})">삭제</v-btn>
+                    <v-btn @click="BoardDelete({idboard:idboard})">삭제</v-btn>
                 </td>
             </tr>
         </table>
@@ -26,7 +26,8 @@ import {mapActions,mapState} from "vuex"
 export default {
     data(){
         return {
-            boardid : this.$route.params.boardid,
+            
+            idboard : this.$route.params.idboard,
         }
     },
     computed:{
