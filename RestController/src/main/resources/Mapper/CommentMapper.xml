@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.SpringStarter.example.Mapper.CommentMapper">
+
+
+<insert id="insertcomment" parameterType="Comment">
+		Insert INTO Comment(
+			writerid,
+			comment,
+			idboard
+		) VALUES (
+			#{writerid},
+			#{comment},
+			#{idboard}
+		)
+
+
+</insert>
+
+
+<select id="selectcomment" parameterType="int" resultType="Comment">
+
+	select idcomment, writerid, comment, datetime, idboard, timediff(now(),datetime) as timediff
+	from comment
+	where idboard = #{idboard}
+	order by datetime desc;
+
+
+</select>
+</mapper>

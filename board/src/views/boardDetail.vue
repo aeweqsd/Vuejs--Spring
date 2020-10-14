@@ -19,22 +19,74 @@
                 </td>
             </tr>
         </table>
+            <v-textarea
+            name="comment"
+            v-model="comment"
+            auto-grow
+            label="댓글"
+            hint="댓글을 쓸때에는 생각하시고 쓰세요"
+            ></v-textarea>
+            <v-btn block @click="CommentWrite({idboard:idboard,comment:comment,userid:userid})">
+                댓글 작성
+            </v-btn>
+            <template v-for="(item) in commentList">
+          <v-card
+        elevation="2"
+        :key ="item.idboard">
+            <v-card-title v-html="item.comment"></v-card-title>
+                <v-card-subtitle v-html="time(item.timediff)"></v-card-subtitle>
+                <v-card-subtitle v-html="item.writerid"></v-card-subtitle>
+            <v-card-text><v-icon></v-icon></v-card-text>
+    </v-card>
+            </template>
     </v-flex>
 </template>
+
 <script>
 import {mapActions,mapState} from "vuex"
 export default {
+    created(){
+        this.$store.dispatch("selectcomment",this.$route.params.idboard)        
+
+    },
+
     data(){
         return {
-            
-            idboard : this.$route.params.idboard,
+            userid  : this.$store.state.Userinfo.User_Id,
+            idboard : this.$route.params.idboard
         }
     },
     computed:{
-        ...mapState(["board_detail"])
+        ...mapState(["board_detail","commentList"])
     },
     methods:{
-        ...mapActions(["BoardDelete"])
+        ...mapActions(["BoardDelete","CommentWrite"]),
+        iden: function(a,b){
+            if(a == b){
+                return true;
+            }else{
+                return false;
+            }
+        },
+        time: function(a){
+      var date = a.split(':');
+        if(date[0] !=0){
+            if(date[0]/24 >=1){
+           //     console.log(Math.round(date[0]/24)+"일 전")
+                return Math.round(date[0]/24)+"일 전";
+            }else{
+           //     console.log(date[0] +"시간 전")
+                return date[0] +"시간 전";
+            }
+        }else if(date[1] !=0){
+        //  console.log(date[1]+"분 전")
+          return date[1]+"분 전";
+        }else{
+        //  console.log(date[2]+"초 전")
+          return date[2]+"초 전";
+}
+    
+    }
     }
 }
 </script>

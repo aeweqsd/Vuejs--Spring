@@ -11,8 +11,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.SpringStarter.example.Domain.Board;
+import com.SpringStarter.example.Domain.Comment;
 import com.SpringStarter.example.Domain.Subject;
+import com.SpringStarter.example.Request.CommentRequest;
 import com.SpringStarter.example.Service.BoardService;
+import com.SpringStarter.example.Service.CommentService;
 import com.SpringStarter.example.Service.SubjectService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -25,7 +28,8 @@ public class Controller {
 	
 		 @Autowired private BoardService boardservice;
 		 @Autowired private SubjectService subjectservice;
-	
+		 @Autowired private CommentService commentservice;
+		 
 	@GetMapping("/all")
 	public String allAccess() {
 		return "Public Content.";
@@ -67,11 +71,30 @@ public class Controller {
 		List<Subject> subjectlist = subjectservice.selectSubjectList();
 		return ResponseEntity.ok(subjectlist);
 	}
+/*	
 	@PostMapping("/subjectselect")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<?> subjectselect(@RequestBody String name){
 		List<Board> board= boardservice.subjectboardlist(name);
 		return ResponseEntity.ok("aaa");
+	}*/
+	@PostMapping("/comment")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<?> insertcomment(@RequestBody CommentRequest com){
+		Comment comment = new Comment();
+		comment.setComment(com.getComment());
+		comment.setIdboard(com.getIdboard());
+		comment.setWriterid(com.getUserid());
+		commentservice.insertcomment(comment);
+		List<Comment> commentlist = commentservice.selectcomment(com.getIdboard());
+		return ResponseEntity.ok(commentlist);
+	}
+	
+	@GetMapping("/comment")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<?> selectcomment(@RequestParam int idboard){
+		List<Comment> comment = commentservice.selectcomment(idboard);
+		return ResponseEntity.ok(comment);
 	}
 	
 }

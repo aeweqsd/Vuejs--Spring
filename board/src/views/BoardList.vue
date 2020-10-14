@@ -1,9 +1,6 @@
 <template>
   <v-container>
-    <v-flex xs12>
-      <v-row>
-        <v-col
-        sm="6">
+    <v-flex xs12>     
         <template v-for="(item) in boardlist">
         <v-card class="pa-3" outlined>
           <v-list three-line>
@@ -20,12 +17,6 @@
           </v-list>
         </v-card>
         </template>
-        </v-col>
-     <v-col
-      sm="6">
-      <sample></sample>
-     </v-col>
-      </v-row>
     </v-flex>
   </v-container>
 </template>

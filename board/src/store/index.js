@@ -16,6 +16,7 @@ export default new Vuex.Store({
     boardList:[],
     board_detail:[],
     boardSubject:[],
+    commentList:[],
     menu:[
       { icon: 'mdi-login',
         text:'로그인',
@@ -60,6 +61,9 @@ export default new Vuex.Store({
   },
   SET_MENU(state,data){
     state.menu = data
+  },
+  SET_COMMENTLIST(state,data){
+    state.commentList=data
   }
 },
   actions: {
@@ -92,7 +96,6 @@ export default new Vuex.Store({
         })
 
       })
-
     },
     islogin({commit},payload){
       if(cookie.isKey("User")){
@@ -219,6 +222,34 @@ export default new Vuex.Store({
         
         })
       })
-    }  
+    },
+    CommentWrite({commit},payload){
+      console.log(payload)
+      return new Promise((resolve,reject) =>{
+        axios.post('http://localhost:9000/api/test/comment',payload)
+        .then(Response=>{
+          console.log(Response.data)
+          commit('SET_COMMENTLIST',Response.data)
+        })
+      })
+    }, 
+    selectcomment({commit},payload){
+      console.log(payload)
+      return new Promise((resolve,reject) =>{
+        axios.get('http://localhost:9000/api/test/comment',{
+          params:{
+            idboard : payload
+          }
+        })
+        .then(Response=>{
+          console.log(Response.data)
+          commit('SET_COMMENTLIST',Response.data)
+        })
+        .catch(Error=>{
+          console.log('error')
+          reject(Error)
+        })
+      })
+    }
   }
 })
