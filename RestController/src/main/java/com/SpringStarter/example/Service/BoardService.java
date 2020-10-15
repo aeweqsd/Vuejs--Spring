@@ -7,7 +7,7 @@ import com.SpringStarter.example.Domain.Board;
 public interface BoardService {
 	
 	
-	public List<Board> selectBoardList();
+	public List<Board> selectBoardList(int boardpage);
 	
 	
 	public Board selectBoardDetail(int idboard);

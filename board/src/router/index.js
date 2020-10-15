@@ -31,7 +31,7 @@ const routes = [
   },
   
   { 
-    path:'/boardlist',
+    path:'/boardlist/',
     name:'BoardList',
     component : BoardList
 

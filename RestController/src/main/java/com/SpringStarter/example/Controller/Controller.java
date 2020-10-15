@@ -37,8 +37,9 @@ public class Controller {
 	
 	@GetMapping("/user")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<?> userAccess(){
-		List<Board> boardList = boardservice.selectBoardList();
+	public ResponseEntity<?> userAccess(@RequestParam int boardpage){
+		logger.info("///" + boardpage);
+		List<Board> boardList = boardservice.selectBoardList(boardpage);
 		return ResponseEntity.ok(boardList);
 		}
 	
@@ -96,5 +97,10 @@ public class Controller {
 		List<Comment> comment = commentservice.selectcomment(idboard);
 		return ResponseEntity.ok(comment);
 	}
-	
+	@DeleteMapping("/comment/{idcomment}")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<?> deletecomment(@PathVariable(value="idcomment") int idcomment){
+		commentservice.deletecomment(idcomment);
+		return ResponseEntity.ok(idcomment);
+	}
 }

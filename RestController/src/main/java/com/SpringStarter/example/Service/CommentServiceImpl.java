@@ -24,4 +24,11 @@ public class CommentServiceImpl implements CommentService{
 	public List<Comment> selectcomment(int idboard){
 		return commentmapper.selectcomment(idboard);
 	}
+
+
+	@Override
+	public void deletecomment(int idcomment) {
+		commentmapper.deletecomment(idcomment);
+		
+	}
 }

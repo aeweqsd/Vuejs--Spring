@@ -15,7 +15,7 @@
             </tr>
             <tr>
                 <td style="text-align:right">
-                    <v-btn @click="BoardDelete({idboard:idboard})">삭제</v-btn>
+                    <div v-if="board_detail.boardwriter ===userid"><v-btn @click="BoardDelete({idboard:idboard})">삭제</v-btn></div>
                 </td>
             </tr>
         </table>
@@ -25,18 +25,24 @@
             auto-grow
             label="댓글"
             hint="댓글을 쓸때에는 생각하시고 쓰세요"
+            clearable
             ></v-textarea>
-            <v-btn block @click="CommentWrite({idboard:idboard,comment:comment,userid:userid})">
+            <v-btn block @click="CommentWrite({idboard:idboard,comment:comment,userid:userid}); clear();">
                 댓글 작성
             </v-btn>
-            <template v-for="(item) in commentList">
+              <v-pagination
+            v-model="page"
+            :length="(commentList.length)/5 +1"
+            >
+            </v-pagination>
+            <template v-for="(item) in listpaging(commentList,page)">
           <v-card
         elevation="2"
-        :key ="item.idboard">
-            <v-card-title v-html="item.comment"></v-card-title>
-                <v-card-subtitle v-html="time(item.timediff)"></v-card-subtitle>
-                <v-card-subtitle v-html="item.writerid"></v-card-subtitle>
-            <v-card-text><v-icon></v-icon></v-card-text>
+        :key ="item.idcomment">
+                <v-card-title v-html="item.comment"></v-card-title>
+                    <v-card-subtitle v-html="time(item.timediff)"></v-card-subtitle>
+                    <v-card-subtitle v-html="item.writerid"></v-card-subtitle>
+                    <div v-if="item.writerid === userid"><v-card-text><v-icon @click="CommentDelete({idcomment:item.idcomment})">mdi-trash-can</v-icon></v-card-text></div>            
     </v-card>
             </template>
     </v-flex>
@@ -53,23 +59,17 @@ export default {
     data(){
         return {
             userid  : this.$store.state.Userinfo.User_Id,
-            idboard : this.$route.params.idboard
+            idboard : this.$route.params.idboard,
+            page : 1
         }
     },
     computed:{
         ...mapState(["board_detail","commentList"])
     },
     methods:{
-        ...mapActions(["BoardDelete","CommentWrite"]),
-        iden: function(a,b){
-            if(a == b){
-                return true;
-            }else{
-                return false;
-            }
-        },
+        ...mapActions(["BoardDelete","CommentWrite","CommentDelete"]),
         time: function(a){
-      var date = a.split(':');
+        var date = a.split(':');
         if(date[0] !=0){
             if(date[0]/24 >=1){
            //     console.log(Math.round(date[0]/24)+"일 전")
@@ -84,8 +84,13 @@ export default {
         }else{
         //  console.log(date[2]+"초 전")
           return date[2]+"초 전";
-}
-    
+        }
+    },
+        listpaging: function(a,b){
+            return a.slice((b-1)*5,b*5)
+    },
+        clear: function(){
+            this.comment= "";
     }
     }
 }

@@ -14,6 +14,8 @@ export default new Vuex.Store({
     login_err:false,
     login_success:false,
     boardList:[],
+    boardpage:1,
+    maxpage:0,
     board_detail:[],
     boardSubject:[],
     commentList:[],
@@ -64,6 +66,16 @@ export default new Vuex.Store({
   },
   SET_COMMENTLIST(state,data){
     state.commentList=data
+  },
+  SET_COMMENTDELETE(state,data){
+    var index = state.commentList.findIndex(i=> i.idcomment == data);
+    state.commentList.splice(index,1)
+  },
+  SET_PAGE(state,data){
+    state.boardpage =data
+  },
+  SET_MAXPAGE(state,data){
+    state.maxpage=data
   }
 },
   actions: {
@@ -147,11 +159,17 @@ export default new Vuex.Store({
         })
       })
     },
-    boardList({commit}){
+    boardList({commit},payload){
+      console.log(payload)
       return new Promise((resolve,reject) =>{
-        axios.get('http://localhost:9000/api/test/user')
+        axios.get('http://localhost:9000/api/test/user',{
+          params:{
+            boardpage:payload
+          }
+        })
         .then(Response=>{
-          console.log(Response.data)
+          console.log(Response.data[0].boardmax)
+          commit('SET_MAXPAGE' ,Response.data[0].boardmax)
           commit('SET_BOARDLIST',Response.data)
         })
         .catch(Error=>{
@@ -244,6 +262,20 @@ export default new Vuex.Store({
         .then(Response=>{
           console.log(Response.data)
           commit('SET_COMMENTLIST',Response.data)
+        })
+        .catch(Error=>{
+          console.log('error')
+          reject(Error)
+        })
+      })
+    },
+    CommentDelete({commit},payload){
+      console.log(payload)
+      return new Promise((resolve,reject) =>{
+        axios.delete('http://localhost:9000/api/test/comment/'+payload.idcomment)
+        .then(Response=>{
+          console.log(Response.data)
+          commit('SET_COMMENTDELETE',Response.data)
         })
         .catch(Error=>{
           console.log('error')

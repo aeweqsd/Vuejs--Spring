@@ -2,21 +2,32 @@
   <v-container>
     <v-flex xs12>     
         <template v-for="(item) in boardlist">
-        <v-card class="pa-3" outlined>
+        <v-card class="pa-3" outlined
+        :key ="item.idboard">
           <v-list three-line>
              <v-list-item
-                :key ="item.idboard"
+                
                 @click="boardDetail(item.idboard)"
               >
               <v-list-item-content>
                 <v-list-item-subtitle v-html="item.boardname"></v-list-item-subtitle>
+                <v-list-item-subtitle v-html="item.boardwriter"></v-list-item-subtitle>
                 <v-list-item-subtitle v-html="time(item.timediff)"></v-list-item-subtitle>
               </v-list-item-content>
               </v-list-item>
-            
           </v-list>
         </v-card>
         </template>
+        <p class="text-sm-center">
+          <v-pagination
+          v-model="boardpage"
+          :length="maxpage/5"
+          :total-visible="5"
+          >
+          </v-pagination>
+        </p>
+        <p class="text-sm-right">
+        <v-btn>글생성</v-btn></p>
     </v-flex>
   </v-container>
 </template>
@@ -28,14 +39,21 @@ import sample from '../components/BoardSubject.vue'
 
 export default {
   created(){
-    
-    this.$store.dispatch('boardList')
+    this.$store.dispatch("boardList",this.$store.state.boardpage)
   },
+  data(){
+    return{
+      boardpage : this.$store.state.boardpage,
+      maxpage : this.$store.state.maxpage
+    }
+  }
+  ,
+
   computed:{
     ...mapState(["boardlist"])
   },
   methods:{
-    ...mapActions(['boardDetail','boardWrite']),
+    ...mapActions(['boardDetail','boardWrite','boardList']),
     time: function(a){
       var date = a.split(':');
         if(date[0] !=0){

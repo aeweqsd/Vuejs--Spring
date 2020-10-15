@@ -10,4 +10,5 @@ import com.SpringStarter.example.Domain.Comment;
 public interface CommentMapper {
 	public void insertcomment(Comment commnet);
 	public List<Comment> selectcomment(int idboard);
+	public void deletecomment(int idcomment);
 }

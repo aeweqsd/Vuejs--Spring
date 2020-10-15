@@ -8,7 +8,7 @@ import com.SpringStarter.example.Domain.Board;
 
 @Mapper
 public interface BoardMapper {
-	public List<Board> selectBoardList();
+	public List<Board> selectBoardList(int boardpage);
 	
 	
 	public Board selectBoardDetail(int idboard);

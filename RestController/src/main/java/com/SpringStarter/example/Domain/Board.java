@@ -3,6 +3,13 @@ package com.SpringStarter.example.Domain;
 
 
 public class Board {
+	private int boardmax;
+	public int getBoardmax() {
+		return boardmax;
+	}
+	public void setBoardmax(int boardmax) {
+		this.boardmax = boardmax;
+	}
 	private int idboard;
 	private String boardname;
 	private String boardsubject;

@@ -25,6 +25,11 @@
 	where idboard = #{idboard}
 	order by datetime desc;
 
-
 </select>
+
+<delete id="deletecomment" parameterType="int">
+	Delete from comment
+	where idcomment = #{idcomment}
+
+</delete>
 </mapper>
