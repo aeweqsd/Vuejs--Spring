@@ -41,5 +41,27 @@ from board
 where boardsubject = #{subject}
 order by datetime desc;
 </select>
- 
+
+
+
+<insert id="insertBoard"  parameterType="Board">
+insert into Board(
+	boardname,
+	boardcontent,
+	boardwriter,
+	hit,
+	likenum
+)
+values(
+	#{boardname},
+	#{boardcontent},
+	#{boardwriter},
+	0,
+	0
+)
+<selectKey keyProperty="idboard" resultType="int" order="AFTER">
+	SELECT LAST_INSERT_ID()
+</selectKey>
+
+</insert>
 </mapper>

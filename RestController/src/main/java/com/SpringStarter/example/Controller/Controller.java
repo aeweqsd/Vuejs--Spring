@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import com.SpringStarter.example.Domain.Board;
 import com.SpringStarter.example.Domain.Comment;
 import com.SpringStarter.example.Domain.Subject;
+import com.SpringStarter.example.Request.BoardRequest;
 import com.SpringStarter.example.Request.CommentRequest;
 import com.SpringStarter.example.Service.BoardService;
 import com.SpringStarter.example.Service.CommentService;
@@ -57,7 +58,17 @@ public class Controller {
 		Board board = boardservice.selectBoardDetail(idboard);
 		return ResponseEntity.ok(board);		
 	}
-	
+	@PostMapping("/board")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<?> createboard(@RequestBody BoardRequest bo){
+		Board board = new Board();
+		board.setBoardcontent(bo.getContent());
+		board.setBoardname(bo.getTitle());
+		board.setBoardwriter(bo.getUserid());
+		boardservice.insertBoard(board);
+		logger.info("///" + board.getIdboard());
+		return ResponseEntity.ok(boardservice.selectBoardDetail(board.getIdboard()));
+	}
 	@DeleteMapping("/board/{idboard}")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<?> boarddelete(@PathVariable(value ="idboard") int idboard){

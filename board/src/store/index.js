@@ -45,7 +45,7 @@ export default new Vuex.Store({
       Route.push("/user")
   },
   SET_BOARDLIST(state,data){
-    state.boardlist = data
+    state.boardList = data
   },
   SET_BOARDDETAIL(state,data){
     state.board_detail=data
@@ -76,6 +76,9 @@ export default new Vuex.Store({
   },
   SET_MAXPAGE(state,data){
     state.maxpage=data
+  },
+  SET_BOARDPAGE(state,data){
+    state.boardpage=data
   }
 },
   actions: {
@@ -168,8 +171,9 @@ export default new Vuex.Store({
           }
         })
         .then(Response=>{
-          console.log(Response.data[0].boardmax)
+          console.log(Response.data)
           commit('SET_MAXPAGE' ,Response.data[0].boardmax)
+          commit('SET_BOARDPAGE',payload)
           commit('SET_BOARDLIST',Response.data)
         })
         .catch(Error=>{
@@ -282,6 +286,20 @@ export default new Vuex.Store({
           reject(Error)
         })
       })
+    },
+    BoardCreate({commit},payload){
+      console.log(payload)
+      return new Promise((resolve,reject) =>{
+        axios.post('http://localhost:9000/api/test/board',payload)
+      .then(Response=>{
+        console.log(Response.data)
+        router.push('/boardlist')
+      })
+      .catch(Error=>{
+        console.log('error')
+        reject(Error)
+      })
+    })
     }
   }
 })

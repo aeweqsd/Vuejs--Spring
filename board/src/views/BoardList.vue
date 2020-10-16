@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-flex xs12>     
-        <template v-for="(item) in boardlist">
+        <template v-for="(item) in boardList">
         <v-card class="pa-3" outlined
         :key ="item.idboard">
           <v-list three-line>
@@ -21,13 +21,14 @@
         <p class="text-sm-center">
           <v-pagination
           v-model="boardpage"
-          :length="maxpage/5"
+          :length="maxpage/5 +1"
           :total-visible="5"
+          @input="next(boardpage)"
           >
           </v-pagination>
         </p>
         <p class="text-sm-right">
-        <v-btn>글생성</v-btn></p>
+        <v-btn @click="goBoardcreate">글생성</v-btn></p>
     </v-flex>
   </v-container>
 </template>
@@ -38,9 +39,6 @@ import sample from '../components/BoardSubject.vue'
 
 
 export default {
-  created(){
-    this.$store.dispatch("boardList",this.$store.state.boardpage)
-  },
   data(){
     return{
       boardpage : this.$store.state.boardpage,
@@ -50,7 +48,7 @@ export default {
   ,
 
   computed:{
-    ...mapState(["boardlist"])
+    ...mapState(["boardList"])
   },
   methods:{
     ...mapActions(['boardDetail','boardWrite','boardList']),
@@ -70,10 +68,17 @@ export default {
         }else{
         //  console.log(date[2]+"초 전")
           return date[2]+"초 전";
-}
+} 
     
+    },
+    goBoardcreate: function(){
+      this.$router.push('/boardcreate')
+    },
+    next:function(a){
+      this.$store.dispatch("boardList",a)
     }
   },
+  
   components:{
       sample
   }

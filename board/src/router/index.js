@@ -7,6 +7,7 @@ import Signup from '../views/SignUp.vue'
 import boardDetail from '../views/boardDetail.vue'
 import boardSubject from '../views/boardSubject.vue'
 import logout from "../views/Logout.vue"
+import boardcreate from "../views/Boardcreate.vue"
 
 Vue.use(VueRouter)
 
@@ -31,7 +32,7 @@ const routes = [
   },
   
   { 
-    path:'/boardlist/',
+    path:'/boardlist',
     name:'BoardList',
     component : BoardList
 
@@ -60,6 +61,11 @@ const routes = [
     path:'/Logout',
     name:'logout',
     component: logout
+  },
+  {
+    path:'/Boardcreate',
+    name:'boardcreate',
+    component: boardcreate
   }
 ]
 

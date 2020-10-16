@@ -17,4 +17,5 @@ public interface BoardService {
 	
 	public List<Board> subjectboardlist(String subject);
 
+	public int insertBoard(Board board);
 }

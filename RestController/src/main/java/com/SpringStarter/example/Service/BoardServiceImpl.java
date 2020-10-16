@@ -35,4 +35,10 @@ public class BoardServiceImpl implements BoardService{
 		return boardmapper.subjectboardlist(subject);
 	}
 
+	@Override
+	public int insertBoard(Board board) {
+		return boardmapper.insertBoard(board);
+		
+	}
+
 }

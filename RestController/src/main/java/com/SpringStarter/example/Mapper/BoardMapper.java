@@ -18,5 +18,6 @@ public interface BoardMapper {
 	
 	public List<Board> subjectboardlist(String subject);
 	
+	public int insertBoard(Board board);
 	
 }
