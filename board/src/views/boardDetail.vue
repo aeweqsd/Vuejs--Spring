@@ -5,7 +5,7 @@
                 <td colspan="2" style="font-weight:700;"> {{board_detail.boardname}}</td>
             </tr>
             <tr style="font-size:0.9rem;">
-                <td> 작성자 ㅣ {{board_detail.boardwriter}}</td>
+                <td> 작성자 ㅣ {{board_detail.boardwriter}} 조회수 | {{board_detail.hit}}</td>
                 <td style="text-align:right">{{board_detail.datetime}}</td>
             </tr>
             <tr>

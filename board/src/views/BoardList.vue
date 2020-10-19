@@ -13,6 +13,7 @@
                 <v-list-item-subtitle v-html="item.boardname"></v-list-item-subtitle>
                 <v-list-item-subtitle v-html="item.boardwriter"></v-list-item-subtitle>
                 <v-list-item-subtitle v-html="time(item.timediff)"></v-list-item-subtitle>
+                <v-list-item-subtitle v-html="item.hit"></v-list-item-subtitle>
               </v-list-item-content>
               </v-list-item>
           </v-list>
@@ -21,12 +22,27 @@
         <p class="text-sm-center">
           <v-pagination
           v-model="boardpage"
-          :length="maxpage/5 +1"
+          :length="page234(maxpage)"
           :total-visible="5"
           @input="next(boardpage)"
           >
           </v-pagination>
         </p>
+        <v-card class="d-flex justify-center align-center order-6"
+        elevation="0">
+            <v-text-field
+            label ="검색"
+            name ="search"
+            v-model ="search"
+            clearable
+            prepend-icon="mdi-database-search">
+            </v-text-field>
+        </v-card>
+        <v-card 
+        class="d-flex justify-center align-end sm-4"
+        elevation="0">
+            <v-btn color="primary">검색</v-btn>
+        </v-card>
         <p class="text-sm-right">
         <v-btn @click="goBoardcreate">글생성</v-btn></p>
     </v-flex>
@@ -39,6 +55,7 @@ import sample from '../components/BoardSubject.vue'
 
 
 export default {
+
   data(){
     return{
       boardpage : this.$store.state.boardpage,
@@ -52,6 +69,14 @@ export default {
   },
   methods:{
     ...mapActions(['boardDetail','boardWrite','boardList']),
+    page234:function(a){
+        if(a%5 ==0){
+          return Math.floor(a/5);
+        } else{
+          return Math.floor(a/5)+1;
+        }
+
+    },
     time: function(a){
       var date = a.split(':');
         if(date[0] !=0){

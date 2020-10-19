@@ -46,13 +46,15 @@ import {mapActions,mapState} from 'vuex'
 export default {
     data(){
         return {
-            userid  : this.$store.state.Userinfo.User_Id
+            userid  : this.$store.state.Userinfo.User_Id,
+            boardpage : this.$store.state.boardpage
         }
 
     },
     methods:{
-        ...mapActions(['BoardCreate']),
+        ...mapActions(['BoardCreate','boardList']),
         reverse : function(){
+            this.$store.dispatch("boardList",this.boardpage)
         }
     }
     

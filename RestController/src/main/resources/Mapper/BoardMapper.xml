@@ -5,7 +5,7 @@
 <select id="selectBoardList" resultType="Board" parameterType="int">
 select *
 from(
-	select q.boardmax, q.idboard, q.boardname, q.boardcontent, q.boardwriter, q.datetime , timediff(now() ,q.datetime)as timediff, q.rnum
+	select q.boardmax, q.idboard, q.boardname, q.boardcontent, q.boardwriter, q.datetime , timediff(now() ,q.datetime)as timediff, q.rnum,q.hit
     
 		from(
         
@@ -64,4 +64,13 @@ values(
 </selectKey>
 
 </insert>
+
+
+
+<update id="updatehit" parameterType="int">
+update board
+set hit = hit+1
+where idboard = #{idboard};
+
+</update>
 </mapper>

@@ -31,6 +31,7 @@ public class Controller {
 		 @Autowired private SubjectService subjectservice;
 		 @Autowired private CommentService commentservice;
 		 
+		 
 	@GetMapping("/all")
 	public String allAccess() {
 		return "Public Content.";

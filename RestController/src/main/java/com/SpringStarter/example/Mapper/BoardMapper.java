@@ -20,4 +20,6 @@ public interface BoardMapper {
 	
 	public int insertBoard(Board board);
 	
+	public void updatehit(int idboard);
+	
 }

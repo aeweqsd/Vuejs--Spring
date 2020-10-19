@@ -20,7 +20,7 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public Board selectBoardDetail(int idboard) {
-	
+		boardmapper.updatehit(idboard);
 		return boardmapper.selectBoardDetail(idboard);
 	}
 

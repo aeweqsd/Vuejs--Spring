@@ -14,7 +14,7 @@ export default new Vuex.Store({
     login_err:false,
     login_success:false,
     boardList:[],
-    boardpage:1,
+    boardpage:0,
     maxpage:0,
     board_detail:[],
     boardSubject:[],
@@ -46,6 +46,7 @@ export default new Vuex.Store({
   },
   SET_BOARDLIST(state,data){
     state.boardList = data
+    Route.push("/boardlist")
   },
   SET_BOARDDETAIL(state,data){
     state.board_detail=data
