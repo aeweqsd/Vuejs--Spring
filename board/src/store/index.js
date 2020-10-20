@@ -24,7 +24,8 @@ export default new Vuex.Store({
         text:'로그인',
         link:'/login'
       }
-    ]
+    ],
+    Keyword:[]
   },
   getters:{
     allUsers: state=>{
@@ -46,7 +47,6 @@ export default new Vuex.Store({
   },
   SET_BOARDLIST(state,data){
     state.boardList = data
-    Route.push("/boardlist")
   },
   SET_BOARDDETAIL(state,data){
     state.board_detail=data
@@ -80,6 +80,9 @@ export default new Vuex.Store({
   },
   SET_BOARDPAGE(state,data){
     state.boardpage=data
+  },
+  SET_KEYWORD(state,data){
+    state.Keyword=data
   }
 },
   actions: {
@@ -102,7 +105,14 @@ export default new Vuex.Store({
               text:'게시판',
               link:'/boardlist'
       
-            }])
+            },
+            {   icon : 'mdi-cog-outline',
+                text : 'Setting',
+                link : '/Setting'
+
+            }    
+          
+          ])
             commit('SET_USER',Response.data) 
           }
         })
@@ -127,7 +137,12 @@ export default new Vuex.Store({
           text:'게시판',
           link:'/boardlist'
   
-        }])
+        },
+        { icon : 'mdi-cog-outline',
+          text : 'Setting',
+          link : '/Setting'    
+        }
+      ])
         commit('SET_USER',info) 
         
       console.log(info)
@@ -163,7 +178,7 @@ export default new Vuex.Store({
         })
       })
     },
-    boardList({commit},payload){
+    boardlist({commit},payload){
       console.log(payload)
       return new Promise((resolve,reject) =>{
         axios.get('http://localhost:9000/api/test/user',{
@@ -301,6 +316,16 @@ export default new Vuex.Store({
         reject(Error)
       })
     })
+    },
+    InitKeyword({commit},payload){
+      return new Promise((resolve,reject) =>{
+        axios.get('http://localhost:9000/api/test/initkeyword')
+        .then(Response=>{
+          console.log(Response.data)
+          commit('SET_KEYWORD',Object.entries(Response.data))
+        })
+
+      })
     }
   }
 })

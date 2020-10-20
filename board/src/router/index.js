@@ -8,6 +8,8 @@ import boardDetail from '../views/boardDetail.vue'
 import boardSubject from '../views/boardSubject.vue'
 import logout from "../views/Logout.vue"
 import boardcreate from "../views/Boardcreate.vue"
+import Setting from "../views/Setting.vue"
+
 
 Vue.use(VueRouter)
 
@@ -66,6 +68,11 @@ const routes = [
     path:'/Boardcreate',
     name:'boardcreate',
     component: boardcreate
+  },
+  {
+    path:'/Setting',
+    name: 'Setting',
+    component : Setting
   }
 ]
 

@@ -2,7 +2,9 @@ package com.SpringStarter.example.Controller;
 
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import com.SpringStarter.example.Request.BoardRequest;
 import com.SpringStarter.example.Request.CommentRequest;
 import com.SpringStarter.example.Service.BoardService;
 import com.SpringStarter.example.Service.CommentService;
+import com.SpringStarter.example.Service.SearchService;
 import com.SpringStarter.example.Service.SubjectService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -30,6 +33,7 @@ public class Controller {
 		 @Autowired private BoardService boardservice;
 		 @Autowired private SubjectService subjectservice;
 		 @Autowired private CommentService commentservice;
+		 @Autowired private SearchService searchservice;
 		 
 		 
 	@GetMapping("/all")
@@ -114,5 +118,19 @@ public class Controller {
 	public ResponseEntity<?> deletecomment(@PathVariable(value="idcomment") int idcomment){
 		commentservice.deletecomment(idcomment);
 		return ResponseEntity.ok(idcomment);
+	}
+	@GetMapping("/initkeyword")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<?> initKeyword(){
+		List<String> Result = searchservice.initKeyword();
+		HashMap<String,Integer> map = new HashMap<String,Integer>();
+		for(int i=0; i<Result.size();i++) {
+			StringTokenizer st = new StringTokenizer(Result.get(i));
+			while(st.hasMoreTokens()) {
+				String keyword = st.nextToken();
+				map.put(keyword,map.getOrDefault(keyword, 0)+1);
+			}
+		}
+		return ResponseEntity.ok(map);
 	}
 }

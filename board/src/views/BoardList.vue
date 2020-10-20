@@ -55,6 +55,11 @@ import sample from '../components/BoardSubject.vue'
 
 
 export default {
+  created(){
+
+      this.$store.dispatch('boardlist',1)
+    
+  },
 
   data(){
     return{
@@ -65,10 +70,10 @@ export default {
   ,
 
   computed:{
-    ...mapState(["boardList"])
+    ...mapState(['boardList'])
   },
   methods:{
-    ...mapActions(['boardDetail','boardWrite','boardList']),
+    ...mapActions(['boardDetail','boardWrite','boardlist']),
     page234:function(a){
         if(a%5 ==0){
           return Math.floor(a/5);
@@ -100,7 +105,7 @@ export default {
       this.$router.push('/boardcreate')
     },
     next:function(a){
-      this.$store.dispatch("boardList",a)
+      this.$store.dispatch("boardlist",a)
     }
   },
   
