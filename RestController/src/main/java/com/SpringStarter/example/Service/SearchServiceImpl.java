@@ -1,6 +1,7 @@
 package com.SpringStarter.example.Service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,13 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public List<String> initKeyword(){
 		return searchmapper.initKeyword();
+	}
+
+
+	@Override
+	public void insertKeyword(Map<String, Integer> map) {
+		searchmapper.insertKeyword(map);
+		
 	}
 
 }

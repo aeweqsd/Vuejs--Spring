@@ -14,4 +14,18 @@ from board
 </select>
 
 
+
+<insert id ="insertKeyword" parameterType="Map">
+insert into search(
+	keyword,
+	frequency
+) values
+<foreach item="value" index="key" collection="_parameter.entrySet()" separator=" , ">
+( 
+  #{key},
+  #{value}
+)
+</foreach>
+</insert>
+
 </mapper>

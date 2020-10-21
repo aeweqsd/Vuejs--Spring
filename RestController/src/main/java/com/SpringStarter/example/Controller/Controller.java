@@ -3,13 +3,16 @@ package com.SpringStarter.example.Controller;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import com.SpringStarter.example.Domain.Board;
@@ -119,7 +122,7 @@ public class Controller {
 		commentservice.deletecomment(idcomment);
 		return ResponseEntity.ok(idcomment);
 	}
-	@GetMapping("/initkeyword")
+	@GetMapping("/keyword")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<?> initKeyword(){
 		List<String> Result = searchservice.initKeyword();
@@ -133,4 +136,13 @@ public class Controller {
 		}
 		return ResponseEntity.ok(map);
 	}
+
+	@PostMapping(value ="/keyword")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<?> insertKeyword(@RequestBody Map<String,Integer> list){
+		logger.info(list.toString());
+		searchservice.insertKeyword(list);
+		return ResponseEntity.ok(list);
+	}
+	
 }

@@ -45,6 +45,7 @@
         </v-card>
         <p class="text-sm-right">
         <v-btn @click="goBoardcreate">글생성</v-btn></p>
+   
     </v-flex>
   </v-container>
 </template>
@@ -107,6 +108,7 @@ export default {
     next:function(a){
       this.$store.dispatch("boardlist",a)
     }
+  
   },
   
   components:{

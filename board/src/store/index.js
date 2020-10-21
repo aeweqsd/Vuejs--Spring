@@ -25,13 +25,8 @@ export default new Vuex.Store({
         link:'/login'
       }
     ],
-    Keyword:[]
-  },
-  getters:{
-    allUsers: state=>{
-      return state.UserList.length
-    }
-
+    Keyword:[],
+    test:[]
   },
   
   mutations: {
@@ -83,6 +78,9 @@ export default new Vuex.Store({
   },
   SET_KEYWORD(state,data){
     state.Keyword=data
+  },
+  SET_TEST(state,data){
+    state.test=data
   }
 },
   actions: {
@@ -319,13 +317,33 @@ export default new Vuex.Store({
     },
     InitKeyword({commit},payload){
       return new Promise((resolve,reject) =>{
-        axios.get('http://localhost:9000/api/test/initkeyword')
+        axios.get('http://localhost:9000/api/test/keyword')
         .then(Response=>{
-          console.log(Response.data)
+  //    let a = new Map;
+  //        Object.keys(Response.data).forEach(k=>{a.set(k,Response.data[k])})
+  //        console.log(a)
+  //        commit('SET_TEST',a)
           commit('SET_KEYWORD',Object.entries(Response.data))
         })
 
       })
+    },
+    ChangeKeyword({commit},payload){
+      console.log(payload)
+      commit('SET_KEYWORD',payload)
+    },
+    InputKeyword({commit,state},payload){
+ //      console.log(state.Keyword)
+ //     console.log(JSON.stringify(state.Keyword))
+ //       console.log(Object.fromEntries(state.test))
+      return new Promise((resolve,reject)=>{
+        axios.post('http://localhost:9000/api/test/keyword',Object.fromEntries(state.Keyword))
+        .then(Response=>{
+          console.log(Response.data)
+        })
+        commit('SET_KEYWORD',"")
+      })
+     
     }
   }
 })
