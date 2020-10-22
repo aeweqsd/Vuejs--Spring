@@ -19,6 +19,7 @@ export default new Vuex.Store({
     board_detail:[],
     boardSubject:[],
     commentList:[],
+    searchlist:[],
     menu:[
       { icon: 'mdi-login',
         text:'로그인',
@@ -81,6 +82,9 @@ export default new Vuex.Store({
   },
   SET_TEST(state,data){
     state.test=data
+  },
+  SET_SEARCHLIST(state,data){
+    state.searchlist=data
   }
 },
   actions: {
@@ -344,6 +348,13 @@ export default new Vuex.Store({
         commit('SET_KEYWORD',"")
       })
      
+    },
+    Search_List({commit},payload){
+      axios.get('http://localhost:9000/api/test/search')
+      .then(Response=>{
+        console.log(Response.data)
+        commit('SET_SEARCHLIST',Response.data)
+      })
     }
   }
 })

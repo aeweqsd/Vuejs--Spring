@@ -15,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import com.SpringStarter.example.Config.Scheduler;
 import com.SpringStarter.example.Domain.Board;
 import com.SpringStarter.example.Domain.Comment;
 import com.SpringStarter.example.Domain.Subject;
@@ -37,7 +38,6 @@ public class Controller {
 		 @Autowired private SubjectService subjectservice;
 		 @Autowired private CommentService commentservice;
 		 @Autowired private SearchService searchservice;
-		 
 		 
 	@GetMapping("/all")
 	public String allAccess() {
@@ -142,6 +142,12 @@ public class Controller {
 	public ResponseEntity<?> insertKeyword(@RequestBody Map<String,Integer> list){
 		logger.info(list.toString());
 		searchservice.insertKeyword(list);
+		return ResponseEntity.ok(list);
+	}
+	@GetMapping("/search")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<?> createsearch(@RequestParam(value="search",required=false,defaultValue="-1")String search){
+		List<String>list = searchservice.showKeyword("11");
 		return ResponseEntity.ok(list);
 	}
 	

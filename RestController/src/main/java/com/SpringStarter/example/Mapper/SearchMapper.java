@@ -9,4 +9,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface SearchMapper {
 	public List<String> initKeyword();
 	public void insertKeyword(Map<String,Integer> map);
+	public List<String> showKeyword(String name);
 }

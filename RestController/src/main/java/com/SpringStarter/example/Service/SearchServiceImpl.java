@@ -25,4 +25,10 @@ public class SearchServiceImpl implements SearchService {
 		
 	}
 
+
+	@Override
+	public List<String> showKeyword(String name) {
+		return searchmapper.showKeyword(name);
+	}
+
 }

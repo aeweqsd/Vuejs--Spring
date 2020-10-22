@@ -26,13 +26,29 @@
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Example</v-toolbar-title>
+      <v-flex offset-xs7>
+        <v-autocomplete
+        v-model="search"
+      :items="this.$store.state.searchlist"
+      class="mx-4"
+      flat
+      hide-no-data
+      hide-details
+      label="검색"
+      solo-inverted
+      @click ="search_list()"
+      @keydown ="aaa()"
+      append-icon="mdi-magnify"
+      return object
+    ></v-autocomplete>
+      </v-flex>
     </v-app-bar>
         <v-container>
             <v-main>
               <v-container
                 class="fill-height"
                 fluid
-              >
+              ><h3>{{search}}</h3>
                 <router-view/>
                 <v-row
                   align="center"
@@ -45,7 +61,7 @@
  </v-app>
 </template>
 <script>
-import {mapAction,mapState} from "vuex"
+import {mapActions,mapState} from "vuex"
 
 
   export default {
@@ -56,11 +72,26 @@ import {mapAction,mapState} from "vuex"
       source: String,
     },
     data: () => ({
-      drawer : null
+      drawer : null,
+      search : ''
     }),
     methods:{
+      ...mapActions(['Search_List']),
+      search_list(){
+        console.log("clicked")
+        this.$store.dispatch("Search_List")
+      },
+      updateInput: function(event) {
+      var updatedText = event.target.value;
+      console.log(updatedText)
+      this.inputText = updatedText;
+    },
+    aaa(){
+      console.log(this.search)
+    }
     },
     computed:{
+      ...mapState(['searchlist']),
       menu(){
        return this.$store.state.menu;
       }      

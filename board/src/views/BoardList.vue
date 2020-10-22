@@ -1,6 +1,7 @@
 <template>
   <v-container>
-    <v-flex xs12>     
+    <v-flex xs12>
+      <v-flex xs9>
         <template v-for="(item) in boardList">
         <v-card class="pa-3" outlined
         :key ="item.idboard">
@@ -45,7 +46,7 @@
         </v-card>
         <p class="text-sm-right">
         <v-btn @click="goBoardcreate">글생성</v-btn></p>
-   
+      </v-flex>
     </v-flex>
   </v-container>
 </template>

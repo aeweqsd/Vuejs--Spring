@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.SpringStarter.example.Config.JwtUtils;
+import com.SpringStarter.example.Config.Scheduler;
 import com.SpringStarter.example.Domain.User;
 import com.SpringStarter.example.Request.JoinRequest;
 import com.SpringStarter.example.Request.LoginRequest;
@@ -50,9 +51,12 @@ public class authController {
 	
 	@Autowired UserService userservice;
 	
+	@Autowired private Scheduler sc;
+	
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Validated @RequestBody LoginRequest loginRequest){
 		logger.info("test" + loginRequest);
+		sc.print();
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);

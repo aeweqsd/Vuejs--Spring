@@ -28,4 +28,10 @@ insert into search(
 </foreach>
 </insert>
 
+<select id="showKeyword" parameterType="String" resultType="String">
+select Keyword
+from search
+order by Frequency desc
+</select>
+
 </mapper>
