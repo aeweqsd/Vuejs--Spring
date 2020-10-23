@@ -1,7 +1,9 @@
 <template>
 <v-container style="max-width:500px">
     <v-layout>
-        <v-flex xs12>
+        <v-flex xs12
+        style="z-index:100"
+        >
             <v-alert type="error"
                 class="mb-3"
                 :value="login_err">

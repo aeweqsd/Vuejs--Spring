@@ -1,24 +1,28 @@
 package com.SpringStarter.example.Config;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.StringTokenizer;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import org.springframework.stereotype.Component;
+
+import com.googlecode.concurrenttrees.common.KeyValuePair;
+import com.googlecode.concurrenttrees.radix.ConcurrentRadixTree;
+import com.googlecode.concurrenttrees.radix.RadixTree;
+import com.googlecode.concurrenttrees.radix.node.concrete.DefaultCharArrayNodeFactory;
 
 @Component
 public class SearchUtils {
-	public HashMap<String, Integer> init(List<String> a){
-		HashMap<String,Integer> map = new HashMap<String,Integer>();
-		for(int i=0; i<a.size();i++) {
-			StringTokenizer st = new StringTokenizer(a.get(i));
-			while(st.hasMoreTokens()) {
-				String keyword = st.nextToken();
-				map.put(keyword,map.getOrDefault(keyword, 0)+1);
-			}
-		}
-		return map;
+	private RadixTree<String> tree = new ConcurrentRadixTree<String>(new DefaultCharArrayNodeFactory()); 
+	public void insertTree(String keyword) {
+		tree.put(keyword,keyword);
 	}
-	
+	public List<KeyValuePair<String>> search(String keyword){
+		List<KeyValuePair<String>> a =StreamSupport.stream(tree.
+							getKeyValuePairsForKeysStartingWith(keyword)
+							.spliterator(),false)
+							.collect(Collectors.toList());
+		return a;
+	}
 }

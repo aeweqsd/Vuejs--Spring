@@ -31,7 +31,16 @@ insert into search(
 <select id="showKeyword" parameterType="String" resultType="String">
 select Keyword
 from search
-order by Frequency desc
+where Keyword like #{name}
 </select>
+<insert id="insertkeywo" parameterType="List">
+insert into search(
+	keyword
+) values
+(
+	#{name}
+
+)
+</insert>
 
 </mapper>

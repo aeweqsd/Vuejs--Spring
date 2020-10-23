@@ -23,32 +23,50 @@
       app
       color="primary"
       dark
+      elevation="0"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Example</v-toolbar-title>
-      <v-flex offset-xs7>
-        <v-autocomplete
-        v-model="search"
-      :items="this.$store.state.searchlist"
-      class="mx-4"
-      flat
-      hide-no-data
-      hide-details
-      label="검색"
-      solo-inverted
-      @click ="search_list()"
-      @keydown ="aaa()"
-      append-icon="mdi-magnify"
-      return object
-    ></v-autocomplete>
-      </v-flex>
+      <v-row>
+      <v-col offset-md="7"
+      style="padding-top:200px"
+      >
+         <v-text-field
+         append-icon="mdi-magnify"
+         max-width="400"
+         outlined
+         dark
+         v-model="query"
+         @keyup ="aaa()"
+         @keydown.enter ="bbb()">
+         </v-text-field>
+          <v-card
+          class="mt-auto"
+          max-width="400"
+          style="z-index:-1"
+          light
+          flat
+          outlined
+          v-show="searchlist"
+          v-for="item in searchlist"
+          :key="item"
+          @click="completekeyword(item)"
+          >
+         <v-list>
+           <v-list-item-content>
+           <v-list-item-title v-html="item"></v-list-item-title>
+           </v-list-item-content>
+         </v-list>
+         </v-card>
+      </v-col>
+           </v-row>
     </v-app-bar>
         <v-container>
             <v-main>
               <v-container
                 class="fill-height"
                 fluid
-              ><h3>{{search}}</h3>
+              >
                 <router-view/>
                 <v-row
                   align="center"
@@ -73,7 +91,7 @@ import {mapActions,mapState} from "vuex"
     },
     data: () => ({
       drawer : null,
-      search : ''
+      query : ''
     }),
     methods:{
       ...mapActions(['Search_List']),
@@ -86,8 +104,19 @@ import {mapActions,mapState} from "vuex"
       console.log(updatedText)
       this.inputText = updatedText;
     },
-    aaa(){
-      console.log(this.search)
+    aaa(){                   //추천어 검색
+      if(this.query.length <3){
+        return
+      }else{
+        this.$store.dispatch("Search_List",this.query)
+      }
+    },
+    bbb(){                    //검색dispatch
+      console.log(this.query)
+    },
+    completekeyword(item){
+      console.log(item)
+      this.query = item;
     }
     },
     computed:{
@@ -98,3 +127,4 @@ import {mapActions,mapState} from "vuex"
     }
   }
 </script>
+

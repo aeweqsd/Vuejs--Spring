@@ -350,11 +350,23 @@ export default new Vuex.Store({
      
     },
     Search_List({commit},payload){
-      axios.get('http://localhost:9000/api/test/search')
-      .then(Response=>{
-        console.log(Response.data)
-        commit('SET_SEARCHLIST',Response.data)
-      })
+      console.log(payload)
+       axios.get('http://localhost:9000/api/test/search',{
+         params:{
+           keyword : payload
+         }
+       })
+       .then(Response=>{
+       console.log(Response.data)
+       if(Response.data.length >3){
+         Response.data = Response.data.slice(0,3)
+       }else if(Response.data.length <3){
+          while(Response.data.length !=3){
+            Response.data.push('abc');
+          }
+       }
+       commit('SET_SEARCHLIST',Response.data)
+       })
     }
   }
 })

@@ -146,8 +146,8 @@ public class Controller {
 	}
 	@GetMapping("/search")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<?> createsearch(@RequestParam(value="search",required=false,defaultValue="-1")String search){
-		List<String>list = searchservice.showKeyword("11");
+	public ResponseEntity<?> createsearch(@RequestParam(value="keyword",required=false,defaultValue="-1")String search){
+		List<String>list = searchservice.showKeyword("%"+search+"%");
 		return ResponseEntity.ok(list);
 	}
 	
