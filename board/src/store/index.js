@@ -27,7 +27,8 @@ export default new Vuex.Store({
       }
     ],
     Keyword:[],
-    test:[]
+    test:[],
+    search:''
   },
   
   mutations: {
@@ -43,6 +44,7 @@ export default new Vuex.Store({
   },
   SET_BOARDLIST(state,data){
     state.boardList = data
+    Route.push("/boardlist")
   },
   SET_BOARDDETAIL(state,data){
     state.board_detail=data
@@ -85,6 +87,9 @@ export default new Vuex.Store({
   },
   SET_SEARCHLIST(state,data){
     state.searchlist=data
+  },
+  SET_SEARCH(state,data){
+    state.Search=data
   }
 },
   actions: {
@@ -360,13 +365,24 @@ export default new Vuex.Store({
        console.log(Response.data)
        if(Response.data.length >3){
          Response.data = Response.data.slice(0,3)
-       }else if(Response.data.length <3){
-          while(Response.data.length !=3){
-            Response.data.push('abc');
-          }
        }
        commit('SET_SEARCHLIST',Response.data)
        })
+    },
+    Search({commit},payload){
+      axios.get('http://localhost:9000/api/test/searchlist',{
+        params:{
+          keyword:payload
+        }
+      })
+      .then(Response=>{
+        console.log(Response.data)
+
+        commit('SET_BOARDLIST',Response.data)
+        commit('SET_MAXPAGE' ,Response.data[0].boardmax)
+        commit('SET_SEARCHLIST',[])
+        commit('SET_SEARCH',payload)
+      })
     }
   }
 })

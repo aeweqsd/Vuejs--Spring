@@ -2,7 +2,7 @@
     <v-flex xs12>
         <table>
             <tr>
-                <td colspan="2" style="font-weight:700;"> {{board_detail.boardname}}</td>
+                <td colspan="2" style="font-weight:700;"> {{board_detail.boardname|highlight(this.$store.state.search)}}</td>
             </tr>
             <tr style="font-size:0.9rem;">
                 <td> 작성자 ㅣ {{board_detail.boardwriter}} 조회수 | {{board_detail.hit}}</td>
@@ -64,7 +64,7 @@ export default {
         }
     },
     computed:{
-        ...mapState(["board_detail","commentList"])
+        ...mapState(["board_detail","commentList",'search'])
     },
     methods:{
         ...mapActions(["BoardDelete","CommentWrite","CommentDelete"]),
@@ -92,6 +92,14 @@ export default {
         clear: function(){
             this.comment= "";
     }
+    },
+    filters:{
+        highlight:function(value){
+            var iq = new RegExp(value,"ig")
+            return value.toString().replace(iq,function(matched,a,b){
+                return ('<div class="text.text-decoration-underline">'+matched+'</div>');
+            })
+        }
     }
 }
 </script>
@@ -106,5 +114,9 @@ table tr td {
   border-top:1px solid #ededed;
   border-bottom:1px solid #ededed;
   padding:10px;
+}
+
+.highlight{
+    background-color:yellow
 }
 </style>

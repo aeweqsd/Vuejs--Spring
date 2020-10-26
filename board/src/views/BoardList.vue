@@ -4,7 +4,8 @@
       <v-flex xs9>
         <template v-for="(item) in boardList">
         <v-card class="pa-3" outlined
-        :key ="item.idboard">
+        :key ="item.idboard"
+        style="z-index=2">
           <v-list three-line>
              <v-list-item
                 
@@ -45,6 +46,7 @@
             <v-btn color="primary">검색</v-btn>
         </v-card>
         <p class="text-sm-right">
+        <v-btn @click ="reset">검색어 초기화</v-btn>
         <v-btn @click="goBoardcreate">글생성</v-btn></p>
       </v-flex>
     </v-flex>
@@ -58,21 +60,22 @@ import sample from '../components/BoardSubject.vue'
 
 export default {
   created(){
-
+    if(this.$store.state.boardList == null){
       this.$store.dispatch('boardlist',1)
+    }
+    
     
   },
 
   data(){
     return{
-      boardpage : this.$store.state.boardpage,
-      maxpage : this.$store.state.maxpage
+      boardpage : this.$store.state.boardpage
     }
   }
   ,
 
   computed:{
-    ...mapState(['boardList'])
+    ...mapState(['boardList','maxpage','boardpage'])
   },
   methods:{
     ...mapActions(['boardDetail','boardWrite','boardlist']),
@@ -107,7 +110,11 @@ export default {
       this.$router.push('/boardcreate')
     },
     next:function(a){
+      console.log(a)
       this.$store.dispatch("boardlist",a)
+    },
+    reset:function(){
+      this.$store.dispatch('boardlist',1)
     }
   
   },

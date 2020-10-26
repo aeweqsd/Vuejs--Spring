@@ -54,7 +54,7 @@ export default {
     methods:{
         ...mapActions(['BoardCreate','boardList']),
         reverse : function(){
-            this.$store.dispatch("boardList",this.boardpage)
+            this.$store.dispatch("boardlist",this.boardpage)
         }
     }
     

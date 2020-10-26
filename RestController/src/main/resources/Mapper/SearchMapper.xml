@@ -42,5 +42,24 @@ insert into search(
 
 )
 </insert>
+<select id="selectKeyword" parameterType="String" resultType="Board">
+select c.*,timediff(now() ,c.datetime)as timediff
+from(
+select distinct idboard
+from(
+select boardname,idboard
+from board
+union 
+select boardcontent,idboard
+from board 
+union
+select comment, idboard
+from comment
+)as a
+where boardname like #{name}
+)as b, board as c
+where b.idboard = c.idboard
+
+</select>
 
 </mapper>

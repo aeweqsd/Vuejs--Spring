@@ -150,5 +150,12 @@ public class Controller {
 		List<String>list = searchservice.showKeyword("%"+search+"%");
 		return ResponseEntity.ok(list);
 	}
+	@GetMapping("/searchlist")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<?> searchlist(@RequestParam(value="keyword") String keyword){
+		List<Board>list  = searchservice.selectKeyword("%"+keyword+"%");
+		list.get(0).setBoardmax(list.size());
+		return ResponseEntity.ok(list);
+	}
 	
 }
