@@ -2,6 +2,10 @@
   <v-container>
     <v-flex xs12>
       <v-flex xs9>
+        <v-card class="pa-3" outlined>
+
+
+        </v-card>
         <template v-for="(item) in boardList">
         <v-card class="pa-3" outlined
         :key ="item.idboard"
@@ -115,6 +119,9 @@ export default {
     },
     reset:function(){
       this.$store.dispatch('boardlist',1)
+    },
+    aaa(){
+      console.log(" ");
     }
   
   },

@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.*;
 import com.SpringStarter.example.Config.Scheduler;
 import com.SpringStarter.example.Domain.Board;
 import com.SpringStarter.example.Domain.Comment;
+import com.SpringStarter.example.Domain.Note;
 import com.SpringStarter.example.Domain.Subject;
 import com.SpringStarter.example.Request.BoardRequest;
 import com.SpringStarter.example.Request.CommentRequest;
 import com.SpringStarter.example.Service.BoardService;
 import com.SpringStarter.example.Service.CommentService;
+import com.SpringStarter.example.Service.NoteService;
 import com.SpringStarter.example.Service.SearchService;
 import com.SpringStarter.example.Service.SubjectService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +40,9 @@ public class Controller {
 		 @Autowired private SubjectService subjectservice;
 		 @Autowired private CommentService commentservice;
 		 @Autowired private SearchService searchservice;
+		 @Autowired private NoteService noteservice;
+		 
+		 
 		 
 	@GetMapping("/all")
 	public String allAccess() {
@@ -156,6 +161,25 @@ public class Controller {
 		List<Board>list  = searchservice.selectKeyword("%"+keyword+"%");
 		list.get(0).setBoardmax(list.size());
 		return ResponseEntity.ok(list);
+	}
+	@PostMapping(value="/note")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<?> createnote(@RequestBody Note note){
+		noteservice.createNote(note);
+		return ResponseEntity.ok(note);
+	}
+	@GetMapping("/note")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<?> selectnote(@RequestParam(value="id")String id){
+		List<Note> list = noteservice.selectnote(id);
+		return ResponseEntity.ok(list);
+	}
+	@PatchMapping("/note")
+	public ResponseEntity<?> readingnote(@RequestBody String idnote){
+		Integer a = Integer.parseInt(idnote);
+		noteservice.updatenote(a);
+		return ResponseEntity.ok(" ");
+		
 	}
 	
 }

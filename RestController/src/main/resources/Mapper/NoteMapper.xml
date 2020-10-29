@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.SpringStarter.example.Mapper.NoteMapper">
+	
+<insert id="createnote" parameterType="Note">
+insert into Note(
+	idreceiver,
+	idsender,
+	content,
+	is_read
+)
+values(
+	#{idreceiver},
+	#{idsender},
+	#{content},
+	#{is_read}
+)
+</insert>
+<select id="selectnote" resultType="Note">
+select *
+from note
+where idreceiver = #{id}
+</select>
+
+<update id="updatenote" parameterType="Integer" >
+update note
+set is_read = true
+where idnote = #{id}
+
+</update>
+
+</mapper>
+

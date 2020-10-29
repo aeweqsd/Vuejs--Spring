@@ -28,7 +28,8 @@ export default new Vuex.Store({
     ],
     Keyword:[],
     test:[],
-    search:''
+    search:'',
+    note:[]
   },
   
   mutations: {
@@ -90,6 +91,9 @@ export default new Vuex.Store({
   },
   SET_SEARCH(state,data){
     state.Search=data
+  },
+  SET_NOTE(state,data){
+    state.note=data
   }
 },
   actions: {
@@ -112,6 +116,11 @@ export default new Vuex.Store({
               text:'게시판',
               link:'/boardlist'
       
+            },
+            { 
+              icon :'mdi-forum',
+              text :'쪽지',
+              link :'/note'
             },
             {   icon : 'mdi-cog-outline',
                 text : 'Setting',
@@ -145,10 +154,16 @@ export default new Vuex.Store({
           link:'/boardlist'
   
         },
-        { icon : 'mdi-cog-outline',
+        { 
+          icon :'mdi-forum',
+          text :'쪽지',
+          link :'/Note'
+        },
+        { 
+          icon : 'mdi-cog-outline',
           text : 'Setting',
           link : '/Setting'    
-        }
+      }
       ])
         commit('SET_USER',info) 
         
@@ -363,10 +378,10 @@ export default new Vuex.Store({
        })
        .then(Response=>{
        console.log(Response.data)
-       if(Response.data.length >3){
+        if(Response.data.length >3){
          Response.data = Response.data.slice(0,3)
-       }
-       commit('SET_SEARCHLIST',Response.data)
+        }
+        commit('SET_SEARCHLIST',Response.data)
        })
     },
     Search({commit},payload){
@@ -382,6 +397,31 @@ export default new Vuex.Store({
         commit('SET_MAXPAGE' ,Response.data[0].boardmax)
         commit('SET_SEARCHLIST',[])
         commit('SET_SEARCH',payload)
+      })
+    },
+    sendnote({commit},payload){
+      console.log(payload)
+      axios.post('http://localhost:9000/api/test/note',payload)
+       .then(Response=>{
+        console.log(Response.date)
+      })
+    },
+    selectNote({commit},payload){
+      console.log(payload)
+      axios.get('http://localhost:9000/api/test/note',{
+        params:{
+          id:payload
+        }
+      }).then(Response=>{
+        commit('SET_NOTE',Response.data)
+        console.log(Response.data)
+      })
+    },
+    noteread({commit},payload){
+      console.log(payload)
+      axios.patch('http://localhost:9000/api/test/note',payload)
+      .then(Response=>{
+        console.log(Response.data)
       })
     }
   }
