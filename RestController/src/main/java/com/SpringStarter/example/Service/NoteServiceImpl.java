@@ -22,14 +22,25 @@ public class NoteServiceImpl implements NoteService {
 
 
 	@Override
-	public List<Note> selectnote(String id) {
+	public List<Note> selectnote(String id,int option) {
+		if(option ==0) {
 		return notemapper.selectnote(id);
+		}else {
+		return notemapper.selectnoterev(id);
+		}
 	}
 
 
 	@Override
 	public void updatenote(Integer id) {
 		notemapper.updatenote(id);
+		
+	}
+
+
+	@Override
+	public void deletenote(int id) {
+		notemapper.deletenote(id);
 		
 	}
 

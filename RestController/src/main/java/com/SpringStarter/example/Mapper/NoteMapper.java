@@ -11,4 +11,6 @@ public interface NoteMapper {
 	public void createnote(Note note);
 	public List<Note> selectnote(String id);
 	public void updatenote(Integer id);
+	public void deletenote(int id);
+	public List<Note> selectnoterev(String id);
 }

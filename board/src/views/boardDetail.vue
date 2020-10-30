@@ -48,7 +48,7 @@
                             md="4"
                             ><v-text-field
                             label="받는이"
-                            v-model="userid"
+                            v-model="board_detail.boardwriter"
                             disabled
                             ></v-text-field>
                             </v-col>
@@ -74,7 +74,7 @@
                     <v-btn
                     color="blue darken-1"
                     text
-                    @click="send({idreceiver:userid,content:noteval,idsender:userid}), dialog=false">
+                    @click="send({idreceiver:board_detail.boardwriter,content:noteval,idsender:userid}), dialog=false">
                     Send</v-btn>
                 </v-card-action>
              </v-card>

@@ -170,16 +170,20 @@ public class Controller {
 	}
 	@GetMapping("/note")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<?> selectnote(@RequestParam(value="id")String id){
-		List<Note> list = noteservice.selectnote(id);
+	public ResponseEntity<?> selectnote(@RequestParam(value="id")String id,@RequestParam(value="option")int option){
+		List<Note> list = noteservice.selectnote(id,option);
 		return ResponseEntity.ok(list);
 	}
 	@PatchMapping("/note")
 	public ResponseEntity<?> readingnote(@RequestBody String idnote){
 		Integer a = Integer.parseInt(idnote);
 		noteservice.updatenote(a);
-		return ResponseEntity.ok(" ");
-		
+		return ResponseEntity.ok(" ");	
+	}
+	@DeleteMapping("/note/{id}")
+	public ResponseEntity<?> deletenote(@PathVariable(value="id") int id){
+		noteservice.deletenote(id);
+		return ResponseEntity.ok(id);
 	}
 	
 }

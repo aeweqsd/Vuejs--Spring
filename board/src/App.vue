@@ -29,6 +29,7 @@
       <v-toolbar-title>Example</v-toolbar-title>
       <v-row>
       <v-col offset-md="7"
+             offset-sm="7"
       style="padding-top:24px"
       >
          <v-text-field
@@ -45,6 +46,7 @@
          </v-text-field>
       </v-col>
       <v-col offset-md="7"
+             offset-sm="7"
       style="position: relative ; top:159px; margin-top : -200px"
       >
           <v-card

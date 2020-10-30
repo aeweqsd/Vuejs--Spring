@@ -94,8 +94,19 @@ export default new Vuex.Store({
   },
   SET_NOTE(state,data){
     state.note=data
+  },
+  SET_NOTEDELETE(state,data){
+    var index= state.note.findIndex(i=>i.idnote == data)
+    state.note.splice(index,1)
+    
   }
 },
+  getters:{
+    GET_NOTE :(state) => (idnote) =>{
+      return state.note.find(note=>note.idnote === idnote)
+    }
+  },
+
   actions: {
     loginProcess({commit},payload){
       console.log(payload)
@@ -407,21 +418,30 @@ export default new Vuex.Store({
       })
     },
     selectNote({commit},payload){
-      console.log(payload)
-      axios.get('http://localhost:9000/api/test/note',{
+      console.log(payload[0])
+        axios.get('http://localhost:9000/api/test/note',{
         params:{
-          id:payload
+          id:payload[0],
+          option:payload[1]
         }
-      }).then(Response=>{
-        commit('SET_NOTE',Response.data)
-        console.log(Response.data)
-      })
+     }).then(Response=>{
+       commit('SET_NOTE',Response.data)
+       console.log(Response.data)
+     })
     },
     noteread({commit},payload){
       console.log(payload)
       axios.patch('http://localhost:9000/api/test/note',payload)
       .then(Response=>{
         console.log(Response.data)
+      })
+    },
+    notedelete({commit},payload,getters){
+      axios.delete('http://localhost:9000/api/test/note/'+payload)
+      .then(Response=>{
+        console.log(Response.data)
+        commit("SET_NOTEDELETE",Response.data)
+
       })
     }
   }

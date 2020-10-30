@@ -21,6 +21,11 @@ select *
 from note
 where idreceiver = #{id}
 </select>
+<select id="selectnoterev" resultType="Note">
+select *
+from note
+where idsender = #{id}
+</select>
 
 <update id="updatenote" parameterType="Integer" >
 update note
@@ -28,6 +33,12 @@ set is_read = true
 where idnote = #{id}
 
 </update>
+
+<delete id="deletenote" parameterType="int">
+delete from note
+where idnote= #{id}
+
+</delete>
 
 </mapper>
 
