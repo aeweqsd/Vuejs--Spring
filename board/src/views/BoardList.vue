@@ -2,10 +2,14 @@
   <v-container>
     <v-flex xs12>
       <v-flex xs9>
-        <v-card class="pa-3" outlined>
-
-
-        </v-card>
+        <v-tabs>
+          <template v-for="item in boardSubject"
+          >
+            <v-tab
+            :key="item.idsubject"
+            @change="changesub(item.subjectname)">{{item.subjectname}}</v-tab>
+          </template>
+        </v-tabs>
         <template v-for="(item) in boardList">
         <v-card class="pa-3" outlined
         :key ="item.idboard"
@@ -36,18 +40,10 @@
         </p>
         <v-card class="d-flex justify-center align-center order-6"
         elevation="0">
-            <v-text-field
-            label ="검색"
-            name ="search"
-            v-model ="search"
-            clearable
-            prepend-icon="mdi-database-search">
-            </v-text-field>
         </v-card>
         <v-card 
         class="d-flex justify-center align-end sm-4"
         elevation="0">
-            <v-btn color="primary">검색</v-btn>
         </v-card>
         <p class="text-sm-right">
         <v-btn @click ="reset">검색어 초기화</v-btn>
@@ -65,9 +61,9 @@ import sample from '../components/BoardSubject.vue'
 export default {
   created(){
     if(this.$store.state.boardList == null){
-      this.$store.dispatch('boardlist',1)
+      this.$store.dispatch('boardlist',[1,this.$store.state.subject])
     }
-    
+    this.$store.dispatch('boardsubject')
     
   },
 
@@ -79,10 +75,10 @@ export default {
   ,
 
   computed:{
-    ...mapState(['boardList','maxpage','boardpage'])
+    ...mapState(['boardList','maxpage','boardpage','boardSubject','subject'])
   },
   methods:{
-    ...mapActions(['boardDetail','boardWrite','boardlist']),
+    ...mapActions(['boardDetail','boardWrite','boardlist','boardsubject']),
     page234:function(a){
         if(a%5 ==0){
           return Math.floor(a/5);
@@ -115,13 +111,17 @@ export default {
     },
     next:function(a){
       console.log(a)
-      this.$store.dispatch("boardlist",a)
+      this.$store.dispatch("boardlist",[a,this.$store.state.subject])
     },
     reset:function(){
-      this.$store.dispatch('boardlist',1)
+      this.$store.dispatch('boardlist',[1,'ALL'])
     },
     aaa(){
       console.log(" ");
+    },
+    changesub(a){
+        this.$store.dispatch("boardlist",[1,a])
+      
     }
   
   },

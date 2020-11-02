@@ -18,6 +18,7 @@ export default new Vuex.Store({
     maxpage:0,
     board_detail:[],
     boardSubject:[],
+    subject:'ALL',
     commentList:[],
     searchlist:[],
     menu:[
@@ -98,7 +99,9 @@ export default new Vuex.Store({
   SET_NOTEDELETE(state,data){
     var index= state.note.findIndex(i=>i.idnote == data)
     state.note.splice(index,1)
-    
+  },
+  SET_SUBJECT(state,data){
+    state.subject=data
   }
 },
   getters:{
@@ -212,18 +215,20 @@ export default new Vuex.Store({
       })
     },
     boardlist({commit},payload){
-      console.log(payload)
-      return new Promise((resolve,reject) =>{
-        axios.get('http://localhost:9000/api/test/user',{
-          params:{
-            boardpage:payload
+      console.log(payload[0])
+       return new Promise((resolve,reject) =>{
+         axios.get('http://localhost:9000/api/test/user',{
+           params:{
+            boardpage:payload[0],
+            boardsubject : payload[1]
           }
         })
         .then(Response=>{
           console.log(Response.data)
           commit('SET_MAXPAGE' ,Response.data[0].boardmax)
-          commit('SET_BOARDPAGE',payload)
+          commit('SET_BOARDPAGE',payload[0])
           commit('SET_BOARDLIST',Response.data)
+          commit('SET_SUBJECT',payload[1])
         })
         .catch(Error=>{
           console.log('error')
@@ -250,7 +255,7 @@ export default new Vuex.Store({
         })
       })
     },
-    boardSubject({commit},payload){
+    boardsubject({commit},payload){
       return new Promise((resolve,reject) =>{
        axios.get('http://localhost:9000/api/test/boardSubject',{
        })
@@ -408,6 +413,7 @@ export default new Vuex.Store({
         commit('SET_MAXPAGE' ,Response.data[0].boardmax)
         commit('SET_SEARCHLIST',[])
         commit('SET_SEARCH',payload)
+        commit('SET_SUBJECT','ALL')
       })
     },
     sendnote({commit},payload){

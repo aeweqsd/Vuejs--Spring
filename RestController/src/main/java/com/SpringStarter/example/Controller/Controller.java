@@ -22,6 +22,7 @@ import com.SpringStarter.example.Domain.Note;
 import com.SpringStarter.example.Domain.Subject;
 import com.SpringStarter.example.Request.BoardRequest;
 import com.SpringStarter.example.Request.CommentRequest;
+import com.SpringStarter.example.Request.selection;
 import com.SpringStarter.example.Service.BoardService;
 import com.SpringStarter.example.Service.CommentService;
 import com.SpringStarter.example.Service.NoteService;
@@ -51,9 +52,12 @@ public class Controller {
 	
 	@GetMapping("/user")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<?> userAccess(@RequestParam int boardpage){
-		logger.info("///" + boardpage);
-		List<Board> boardList = boardservice.selectBoardList(boardpage);
+	public ResponseEntity<?> userAccess(@RequestParam int boardpage,@RequestParam String boardsubject){
+		selection sel = new selection();
+		sel.setBoardpage(boardpage);
+		sel.setBoardsubject(boardsubject);
+		logger.info("sel = "+sel.toString());
+		List<Board> boardList = boardservice.selectBoardList(sel);
 		return ResponseEntity.ok(boardList);
 		}
 	

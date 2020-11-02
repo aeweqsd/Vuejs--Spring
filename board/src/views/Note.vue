@@ -71,20 +71,22 @@
                 cols="9"
                 >
                     <v-alert
+                        v-if= "this.rev==0"
                         color="indigo"
                         dark
                         dense>현재 읽지 않은 메세지가 {{note.filter(i=>i.is_read == false).length}}개 있습니다.</v-alert>
             </v-col>
             <v-col
             cols="9">
-                <template v-for="(item) in note">
+                <template v-for="(item) in notepaging(note,page)">
                 <v-card
                 :key="item.idnote" outlined
                 style="z-index:2"
                 tile>
                 <v-list-item three-line>
                     <v-list-item-title>
-                    <v-icon>{{ icons.mdiAccount }}</v-icon> | {{item.idsender}}
+                    <div v-if="rev == 0"><v-icon>{{ icons.mdiAccount }}</v-icon>| {{item.idsender}}</div> 
+                    <div v-if="rev==1"><v-icon>{{ icons.mdiAccount }}</v-icon>| {{item.idreceiver}}</div>
                     </v-list-item-title>
                 </v-list-item>
                 <v-list-item-subtitle
@@ -97,8 +99,14 @@
                     <v-btn
                          text
                          color="primary"
-                         v-if="condition(!item.is_read)"
+                         v-if="!item.is_read && rev==0"
                          @click="reading({idnote:item.idnote});"
+                    >읽음표시</v-btn>
+                     <v-btn
+                         text
+                         color="primary"
+                         v-if="!item.is_read && rev==1"
+                         disabled
                     >읽음표시</v-btn>
                     <v-btn
                         color="blue-grey"
@@ -115,6 +123,10 @@
                 </template>
             </v-col>
             </v-row>
+            <v-pagination
+            v-model="page"
+            :length="paging(note.length)"
+            @input="abc(page)"></v-pagination>
             </v-card>
         </v-layout>
     </v-container>
@@ -133,7 +145,6 @@ import {
 export default {
     created(){
         this.$store.dispatch("selectNote",[this.$store.state.Userinfo.User_Id,0])
-        console.log("mdiAccount")
     },    
     data(){
         return{
@@ -148,7 +159,8 @@ export default {
       Reply: false,
       Recevier:'',
       userid : this.$store.state.Userinfo.User_Id,
-      rev : 0
+      rev : 0,
+      page: 1
     }
     },
     computed:{
@@ -181,7 +193,24 @@ export default {
             }
         },
         condition:function(a){
+            if(this.rev ==1){
+                return a
+            }
             return a&&(this.rev==0)
+            
+        },
+        abc:function(a){
+            console.log(a)
+        },
+        notepaging: function(a,b){
+            return a.slice((b-1)*5,b*5)
+    },
+        paging:function(a){
+            if(a%5 ==0){
+                return a/5
+            }else{
+                return a/5+1
+            }
         }
     }
     

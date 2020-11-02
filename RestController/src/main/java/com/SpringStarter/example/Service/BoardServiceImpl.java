@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.SpringStarter.example.Domain.Board;
 import com.SpringStarter.example.Mapper.BoardMapper;
+import com.SpringStarter.example.Request.selection;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -14,8 +15,8 @@ public class BoardServiceImpl implements BoardService{
 	
 	
 	@Override
-	public List<Board> selectBoardList(int boardpage) {
-		return boardmapper.selectBoardList(boardpage);
+	public List<Board> selectBoardList(selection sel) {
+		return boardmapper.selectBoardList(sel);
 	}
 
 	@Override

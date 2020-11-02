@@ -5,10 +5,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.SpringStarter.example.Domain.Board;
+import com.SpringStarter.example.Request.selection;
 
 @Mapper
 public interface BoardMapper {
-	public List<Board> selectBoardList(int boardpage);
+	public List<Board> selectBoardList(selection sel);
 	
 	
 	public Board selectBoardDetail(int idboard);

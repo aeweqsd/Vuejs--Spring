@@ -2,29 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.SpringStarter.example.Mapper.BoardMapper">
 
-<select id="selectBoardList" resultType="Board" parameterType="int">
-select *
-from(
-	select q.boardmax, q.idboard, q.boardname, q.boardcontent, q.boardwriter, q.datetime , timediff(now() ,q.datetime)as timediff, q.rnum,q.hit
-    
-		from(
+<select id="selectBoardList" resultType="Board" parameterType="com.SpringStarter.example.Request.selection">
+SELECT 
+    *
+FROM
+    (SELECT 
+        a.boardmax,
+            a.idboard,
+            a.boardname,
+            a.boardcontent,
+            a.boardwriter,
+            a.datetime,
+            TIMEDIFF(NOW(), a.datetime) AS timediff,
+            a.rnum,
+            a.hit,
+            a.boardsubject
+    FROM
+        (SELECT 
+        *, @rownum:=@rownum + 1 AS rnum
+    FROM
+        (SELECT 
+        COUNT(*) AS boardmax
+    FROM
+        board AS q
+    <if test="boardsubject != 'ALL'">
+  
+    WHERE
+        q.boardsubject = (#{boardsubject})
         
-			select *, @rownum:=@rownum+1 as rnum
-            
-			from(
-                
-					select count(*)as boardmax
-                    
-					from board as q
-                    
-			)as a, board as b,(select @rownum:=0) as c
-                
-			order by datetime desc
-            
-	)as q
-)as a
-where a.rnum between (#{boardpage}-1)*5 +1 and #{boardpage}*5
-
+    </if>
+    ) AS c, board AS q, (SELECT @rownum:=0) AS z
+    <if test="boardsubject != 'ALL'">
+    WHERE
+        q.boardsubject = #{boardsubject}
+    </if>
+    ORDER BY datetime DESC) AS a) AS z
+WHERE
+    z.rnum BETWEEN  (#{boardpage}-1)*5 +1 and #{boardpage}*5
 </select>
 <select id="selectBoardDetail" resultType="Board">
 select idboard,boardname,boardsubject,boardcontent,boardwriter,hit,datetime

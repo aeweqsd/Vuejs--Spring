@@ -20,11 +20,13 @@ values(
 select *
 from note
 where idreceiver = #{id}
+order by idnote desc;
 </select>
 <select id="selectnoterev" resultType="Note">
 select *
 from note
 where idsender = #{id}
+order by idnote desc;
 </select>
 
 <update id="updatenote" parameterType="Integer" >

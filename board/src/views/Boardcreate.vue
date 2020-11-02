@@ -24,6 +24,12 @@
                         required
                         >
                         </v-text-field>
+                        <v-select
+                        ><option v-for="item in boardSubject" 
+                        :value="item.subjectname" 
+                        :key="item.idsubject">
+                            {{item.subjectname}}</option>
+                        </v-select>
                         <v-textarea
                         label="글내용"
                         name="content"
@@ -34,7 +40,7 @@
                     </v-form>
                     <v-card-actions></v-card-actions>
                     <v-btn @click="BoardCreate({title:title,content:content,userid:userid})">글생성</v-btn>
-                    <v-btn @click="reverse()" color="#E53935">생성취소</v-btn>
+                    <v-btn @click="reverse()" color="lime lighten-3">생성취소</v-btn>
                 </v-card-text>
           </v-card>
       </v-flex>
@@ -44,12 +50,20 @@
 <script>
 import {mapActions,mapState} from 'vuex'
 export default {
+    created(){
+        this.boardsubject= this.$store.dispatch(this.$store.dispatch('boardSubject'))
+        console.log(this.boardsubject)
+    },
     data(){
         return {
             userid  : this.$store.state.Userinfo.User_Id,
-            boardpage : this.$store.state.boardpage
+            boardpage : this.$store.state.boardpage,
+            boardsubject:[]
         }
 
+    },
+    computed:{
+        ...mapState(['boardSubject'])
     },
     methods:{
         ...mapActions(['BoardCreate','boardList']),
