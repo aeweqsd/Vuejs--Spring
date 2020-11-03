@@ -64,14 +64,16 @@ insert into Board(
 	boardcontent,
 	boardwriter,
 	hit,
-	likenum
+	likenum,
+	boardsubject
 )
 values(
 	#{boardname},
 	#{boardcontent},
 	#{boardwriter},
 	0,
-	0
+	0,
+	#{boardsubject}
 )
 <selectKey keyProperty="idboard" resultType="int" order="AFTER">
 	SELECT LAST_INSERT_ID()

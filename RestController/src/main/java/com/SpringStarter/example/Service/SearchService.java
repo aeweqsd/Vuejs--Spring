@@ -10,4 +10,5 @@ public interface SearchService {
 	public void insertKeyword(Map<String,Integer> map);
 	public List<String> showKeyword(String name);
 	public List<Board> selectKeyword(String name);
+	public void insertkeywo(List<String> name);
 }

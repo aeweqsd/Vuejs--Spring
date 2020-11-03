@@ -10,6 +10,7 @@ import logout from "../views/Logout.vue"
 import boardcreate from "../views/Boardcreate.vue"
 import Setting from "../views/Setting.vue"
 import Note from "../views/Note.vue"
+import Setting2 from "../views/Setting2.vue"
 
 Vue.use(VueRouter)
 
@@ -78,6 +79,11 @@ const routes = [
     path:'/Note',
     name:'Note',
     component : Note
+  },
+  {
+    path:'/Setting2',
+    name:'Setting2',
+    component :Setting2
   }
 ]
 

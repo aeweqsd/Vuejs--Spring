@@ -3,6 +3,13 @@ package com.SpringStarter.example.Request;
 
 public class BoardRequest {
 	private String title;
+	private String subject;
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
 	public String getTitle() {
 		return title;
 	}

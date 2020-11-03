@@ -160,7 +160,7 @@ export default {
       Recevier:'',
       userid : this.$store.state.Userinfo.User_Id,
       rev : 0,
-      page: 1
+      page: 1,
     }
     },
     computed:{

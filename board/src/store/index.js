@@ -136,10 +136,15 @@ export default new Vuex.Store({
               text :'쪽지',
               link :'/note'
             },
-            {   icon : 'mdi-cog-outline',
-                text : 'Setting',
-                link : '/Setting'
-
+            {   
+              icon : 'mdi-cog-outline',
+              text : 'Setting',
+              link : '/Setting'
+            },
+            {
+              icon : 'mdi-cog-outline',
+              text : 'Setting2',
+              link : '/Setting2'
             }    
           
           ])
@@ -177,7 +182,12 @@ export default new Vuex.Store({
           icon : 'mdi-cog-outline',
           text : 'Setting',
           link : '/Setting'    
-      }
+        },
+        {
+          icon : 'mdi-cog-outline',
+          text : 'Setting2',
+          link : '/Setting2'
+        }
       ])
         commit('SET_USER',info) 
         
@@ -343,17 +353,17 @@ export default new Vuex.Store({
     },
     BoardCreate({commit},payload){
       console.log(payload)
-      return new Promise((resolve,reject) =>{
-        axios.post('http://localhost:9000/api/test/board',payload)
-      .then(Response=>{
-        console.log(Response.data)
-        router.push('/boardlist')
-      })
-      .catch(Error=>{
-        console.log('error')
-        reject(Error)
-      })
-    })
+     return new Promise((resolve,reject) =>{
+       axios.post('http://localhost:9000/api/test/board',payload)
+     .then(Response=>{
+       console.log(Response.data)
+       router.push('/boardlist')
+     })
+     .catch(Error=>{
+       console.log('error')
+       reject(Error)
+     })
+   })
     },
     InitKeyword({commit},payload){
       return new Promise((resolve,reject) =>{

@@ -24,6 +24,7 @@
                 <v-list-item-subtitle v-html="item.boardwriter"></v-list-item-subtitle>
                 <v-list-item-subtitle v-html="time(item.timediff)"></v-list-item-subtitle>
                 <v-list-item-subtitle v-html="item.hit"></v-list-item-subtitle>
+                <v-list-item-subtitle>{{item.boardsubject}}</v-list-item-subtitle>
               </v-list-item-content>
               </v-list-item>
           </v-list>

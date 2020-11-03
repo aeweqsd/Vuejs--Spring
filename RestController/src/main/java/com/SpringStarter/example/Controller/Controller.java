@@ -82,6 +82,7 @@ public class Controller {
 		board.setBoardcontent(bo.getContent());
 		board.setBoardname(bo.getTitle());
 		board.setBoardwriter(bo.getUserid());
+		board.setBoardsubject(bo.getSubject());
 		boardservice.insertBoard(board);
 		logger.info("///" + board.getIdboard());
 		return ResponseEntity.ok(boardservice.selectBoardDetail(board.getIdboard()));

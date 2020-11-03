@@ -2,6 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.SpringStarter.example.Mapper.SearchMapper">
 <select id="initKeyword" resultType="String">
+select distinct *
+from
+(
 select comment
 from comment
 union all 
@@ -10,6 +13,8 @@ from board
 union all
 select boardcontent
 from board
+)as a
+
 
 </select>
 
@@ -33,14 +38,17 @@ select Keyword
 from search
 where Keyword like #{name}
 </select>
-<insert id="insertkeywo" parameterType="List">
-insert into search(
+<insert id="insertkeywo" parameterType="java.util.List">
+insert ignore into search(
 	keyword
 ) values
-(
-	#{name}
 
+<foreach collection="list" item="item" separator=",">
+(
+	#{item}
 )
+</foreach>
+
 </insert>
 <select id="selectKeyword" parameterType="String" resultType="Board">
 select c.*,timediff(now() ,c.datetime)as timediff

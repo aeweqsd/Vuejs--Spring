@@ -40,5 +40,12 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 
+	@Override
+	public void insertkeywo(List<String> name) {
+		searchmapper.insertkeywo(name);
+		
+	}
+
+
 
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.SpringStarter.example.Mapper.ScheduledUtilMapper">
+<delete id="deletecomm">
+DELETE FROM comment 
+WHERE
+    idcomment IN (SELECT 
+        b.idcomment
+    FROM
+        board AS a
+            RIGHT JOIN
+        (SELECT 
+            *
+        FROM
+            comment) AS b ON a.idboard = b.idboard
+    
+    WHERE
+        a.idboard IS NULL)
+</delete>
+
+</mapper>

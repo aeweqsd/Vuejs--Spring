@@ -15,8 +15,23 @@
                 </td>
             </tr>
             <tr>
-                <td style="text-align:right">
-                    <div v-if="board_detail.boardwriter ===userid"><v-btn @click="BoardDelete({idboard:idboard})">삭제</v-btn></div>
+                <td style="padding-left : 35%">
+                    <div v-if="board_detail.boardwriter ===userid" style="width:150px">
+                        <v-btn
+                        @click="aa()"
+                        fab
+                        color="indigo"
+                        outlined
+                        dark><v-icon dark>
+                             mdi-reload
+                        </v-icon></v-btn>
+                        <v-btn @click="BoardDelete({idboard:idboard})"
+                        fab
+                        dark
+                        color="red"
+                        outlined><v-icon dark>mdi-delete</v-icon>
+                        </v-btn>
+                    </div>
                 </td>
             </tr>
         </table>
@@ -162,6 +177,9 @@ export default {
         send:function(a){
             this.$store.dispatch("sendnote",a)
             
+        },
+        aa:function(){
+            console.log(" ")
         }
     },
     filters:{
