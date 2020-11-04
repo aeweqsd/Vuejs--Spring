@@ -351,8 +351,11 @@ export default new Vuex.Store({
         })
       })
     },
-    BoardCreate({commit},payload){
+    BoardCreate({commit},payload,state){
       console.log(payload)
+      if(payload.subject == '기타'){
+        console.log(payload.othersub[0])
+      }
      return new Promise((resolve,reject) =>{
        axios.post('http://localhost:9000/api/test/board',payload)
      .then(Response=>{

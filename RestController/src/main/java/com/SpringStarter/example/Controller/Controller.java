@@ -79,10 +79,15 @@ public class Controller {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<?> createboard(@RequestBody BoardRequest bo){
 		Board board = new Board();
+		 if(bo.getSubject().equals("±‚≈∏")) {
+			board.setBoardsubject(bo.getOthersub()[0]);
+		}else {
+			board.setBoardsubject(bo.getSubject());
+		}
 		board.setBoardcontent(bo.getContent());
 		board.setBoardname(bo.getTitle());
 		board.setBoardwriter(bo.getUserid());
-		board.setBoardsubject(bo.getSubject());
+		
 		boardservice.insertBoard(board);
 		logger.info("///" + board.getIdboard());
 		return ResponseEntity.ok(boardservice.selectBoardDetail(board.getIdboard()));

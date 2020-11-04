@@ -19,7 +19,7 @@
                     <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" @click="logout">예</v-btn>
-                    <v-btn color="#ECEFF1" @click="logout">아니요</v-btn>
+                    <v-btn color="#ECEFF1" @click="cancel">아니요</v-btn>
                     </v-card-actions>
                 </v-alert>
             </v-flex>
@@ -32,7 +32,11 @@ export default {
     methods:{
         logout(payload){
             this.$store.dispatch('logoutProcess',payload)
+        },
+        cancel(){
+           this.$router.push('/boardlist')
         }
+
     }
 }
 </script>
